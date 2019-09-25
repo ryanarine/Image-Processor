@@ -1,0 +1,53 @@
+body,
+html {
+  min-height: 100%;
+}
+
+$textShadow: 1px 0 0 black, -1px 0px 0 black, 0 1px 0 black, 0 -1px 0 black, 0 0 1px black;
+$buttonGradient: linear-gradient(to right, limegreen, #0b0);
+$large: calc(10px + 1.5vw);
+$small: calc(10px + 1vw);
+
+body {
+  background-image: linear-gradient(dodgerblue, blue);
+  background-size: cover;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+  text-shadow: $textShadow;
+  overflow: auto;
+}
+
+button:hover {
+  box-shadow: 0 0 5px black;
+}
+
+button {
+  cursor: pointer;
+  color: white;
+  text-shadow: inherit;
+  background-image: $buttonGradient;
+  border: 2px solid black;
+  border-radius: 5px;
+  font-size: $small;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  border-radius: 10px;
+  max-width: 1200px;
+  margin: auto;
+  padding-bottom: 20px;
+  label {
+    font-size: $large;
+    margin-bottom: 10px;
+  }
+}
+
+.transparent {
+  background-image: url("./transparent.jpg");
+  margin-bottom: 20px;
+  border: 1px solid black;
+  box-shadow: 5px 5px 20px black;
+}

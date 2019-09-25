@@ -1,22 +1,56 @@
-.App {
-  text-align: center;
+body,
+html {
+  min-height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+body {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(dodgerblue), to(blue));
+  background-image: linear-gradient(dodgerblue, blue);
+  background-size: cover;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: white;
+  text-shadow: 1px 0 0 black, -1px 0px 0 black, 0 1px 0 black, 0 -1px 0 black, 0 0 1px black;
+  overflow: auto;
 }
 
-.App-link {
-  color: #09d3ac;
+button:hover {
+  -webkit-box-shadow: 0 0 5px black;
+          box-shadow: 0 0 5px black;
 }
+
+button {
+  cursor: pointer;
+  color: white;
+  text-shadow: inherit;
+  background-image: -webkit-gradient(linear, left top, right top, from(limegreen), to(#0b0));
+  background-image: linear-gradient(to right, limegreen, #0b0);
+  border: 2px solid black;
+  border-radius: 5px;
+  font-size: calc(10px + 1vw);
+}
+
+.grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+  border-radius: 10px;
+  max-width: 1200px;
+  margin: auto;
+  padding-bottom: 20px;
+}
+
+.grid label {
+  font-size: calc(10px + 1.5vw);
+  margin-bottom: 10px;
+}
+
+.transparent {
+  background-image: url("./transparent.jpg");
+  margin-bottom: 20px;
+  border: 1px solid black;
+  -webkit-box-shadow: 5px 5px 20px black;
+          box-shadow: 5px 5px 20px black;
+}
+/*# sourceMappingURL=App.css.map */
