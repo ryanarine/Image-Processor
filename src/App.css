@@ -13,6 +13,13 @@ body {
   overflow: auto;
 }
 
+.container {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: auto;
+}
+
 button:hover {
   -webkit-box-shadow: 0 0 5px black;
           box-shadow: 0 0 5px black;
@@ -26,7 +33,7 @@ button {
   background-image: linear-gradient(to right, limegreen, #0b0);
   border: 2px solid black;
   border-radius: 5px;
-  font-size: calc(10px + 1vw);
+  font-size: calc(15px + 0.5vw);
 }
 
 .grid {
@@ -34,6 +41,9 @@ button {
   display: grid;
   -ms-grid-columns: (1fr)[2];
       grid-template-columns: repeat(2, 1fr);
+  -webkit-column-gap: 100px;
+          column-gap: 100px;
+  row-gap: 10px;
   justify-items: center;
   border-radius: 10px;
   max-width: 1200px;
@@ -42,13 +52,12 @@ button {
 }
 
 .grid label {
-  font-size: calc(10px + 1.5vw);
+  font-size: calc(15px + 1vw);
   margin-bottom: 10px;
 }
 
 .transparent {
   background-image: url("./transparent.jpg");
-  margin-bottom: 20px;
   border: 1px solid black;
   -webkit-box-shadow: 5px 5px 20px black;
           box-shadow: 5px 5px 20px black;
