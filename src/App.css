@@ -62,4 +62,11 @@ button {
   -webkit-box-shadow: 5px 5px 20px black;
           box-shadow: 5px 5px 20px black;
 }
+
+.transparent,
+#canvas,
+#newCanvas {
+  width: 400px;
+  height: 400px;
+}
 /*# sourceMappingURL=App.css.map */
