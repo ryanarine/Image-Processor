@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import "./App.css";
 import Tools from "./Tools";
-import { changeImgData } from "./ToolFunctions";
+import { changeImgData, getSection } from "./ToolFunctions";
 
 class App extends Component {
   constructor() {
     super();
-    this.state = { imgData: null, newData: null, x1: 0, x2: 0, y1: 0, y2: 0 };
+    this.state = { imgData: null, newData: null, x1: 0, x2: 0, y1: 0, y2: 0, sample: false, pixel: null };
     this.imageChange = this.imageChange.bind(this);
     this.download = this.download.bind(this);
     this.loadImage = this.loadImage.bind(this);
     this.swapImage = this.swapImage.bind(this);
     this.replace = this.replace.bind(this);
     this.recentre = this.recentre.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.replaceSection = this.replaceSection.bind(this);
   }
 
   imageChange(event) {
@@ -99,7 +101,7 @@ class App extends Component {
       let y = canvas.id === "canvas" ? this.state.y1 : this.state.y2;
       let imgData = canvas.id === "canvas" ? this.state.imgData : this.state.newData;
       let half = canvas.width / 2;
-      let point = [x + event.clientX - canvas.offsetLeft - half, y + event.clientY - canvas.offsetTop - half];
+      let point = [x + event.pageX - canvas.offsetLeft - half, y + event.pageY - canvas.offsetTop - half];
       point[0] = point[0] < 0 ? 0 : point[0];
       point[0] = point[0] > imgData.width - canvas.width ? imgData.width - canvas.width : point[0];
       point[0] = imgData.width < canvas.width ? 0 : point[0];
@@ -123,17 +125,57 @@ class App extends Component {
     }
   }
 
+  handleClick(event) {
+    if (this.state.imgData && this.state.sample && event.target.id === "canvas") {
+      let canvas = event.target;
+      let point = [event.pageX - canvas.offsetLeft + this.state.x1, event.pageY - canvas.offsetTop + this.state.y1];
+      if (point[0] >= 0 && point[0] <= this.state.imgData.width && point[1] >= 0 && point[1] <= this.state.imgData.height) {
+        let r = this.state.imgData.data[point[1] * this.state.imgData.width * 4 + point[0] * 4];
+        let g = this.state.imgData.data[point[1] * this.state.imgData.width * 4 + point[0] * 4 + 1];
+        let b = this.state.imgData.data[point[1] * this.state.imgData.width * 4 + point[0] * 4 + 2];
+        let a = this.state.imgData.data[point[1] * this.state.imgData.width * 4 + point[0] * 4 + 3];
+        let pixel = [r, g, b, a, point[0], point[1]];
+        this.setState({ sample: false, pixel });
+      }
+    } else {
+      this.recentre(event);
+    }
+  }
+
+  replaceSection(event, state) {
+    event.preventDefault();
+    if (this.state.pixel) {
+      let newColour = [state.rcr, state.rcg, state.rcb, state.rca];
+      let tolerance = [state.tcr, state.tcg, state.tcb, state.tca];
+      let section = getSection(this.state.imgData, this.state.pixel, tolerance);
+      let data = this.state.newData.data;
+      // Replace the colour of each pixel in the section
+      section.forEach(pixel => {
+        data[pixel] = newColour[0];
+        data[pixel + 1] = newColour[1];
+        data[pixel + 2] = newColour[2];
+        data[pixel + 3] = newColour[3];
+      });
+      // Redraw the image
+      document
+        .getElementById("newCanvas")
+        .getContext("2d")
+        .putImageData(this.state.newData, 0, 0);
+    }
+  }
+
   render() {
+    let cls = this.state.sample ? "container cross" : "container";
     return (
-      <div className="container">
+      <div className={cls}>
         <div className="grid">
           <label>Old Preview</label>
           <label>New Preview</label>
           <div className="transparent">
-            <canvas id="canvas" onClick={this.recentre}></canvas>
+            <canvas id="canvas" onClick={this.handleClick}></canvas>
           </div>
           <div className="transparent">
-            <canvas id="newCanvas" onClick={this.recentre}></canvas>
+            <canvas id="newCanvas" onClick={this.handleClick}></canvas>
           </div>
           <input id="upload" type="file" onChange={this.imageChange} hidden />
           <button onClick={() => document.getElementById("upload").click()}>Upload Image</button>
@@ -144,7 +186,13 @@ class App extends Component {
         <a id="download" href="/" style={{ display: "none" }} download="converted">
           Download
         </a>
-        <Tools replace={this.replace} file={this.state.newData} />
+        <Tools
+          replace={this.replace}
+          file={this.state.newData}
+          click={() => this.setState({ sample: !this.state.sample })}
+          pixel={this.state.pixel}
+          submit={this.replaceSection}
+        />
       </div>
     );
   }

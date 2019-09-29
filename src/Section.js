@@ -5,14 +5,10 @@ const btnStyle = {
   margin: "10px auto"
 };
 
-class Replace extends Component {
+class Section extends Component {
   constructor() {
     super();
     this.state = {
-      fcr: 255,
-      fcg: 255,
-      fcb: 255,
-      fca: 255,
       rcr: 255,
       rcg: 255,
       rcb: 255,
@@ -34,34 +30,45 @@ class Replace extends Component {
   }
 
   render() {
+    let pixel = this.props.pixel ? this.props.pixel : [0, 0, 0, 0, 0, 0];
     return (
-      <form onSubmit={e => this.props.submit(this.state, e)} className="replaceGrid">
+      <form onSubmit={e => this.props.submit(e, this.state)} className="sectionGrid">
         <label></label>
-        <label>Find</label>
+        <span>
+          <label>Find</label>
+          <i id="clickIcon" onClick={this.props.click} title="Click section on canvas">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+          </i>
+        </span>
         <label>Replace</label>
         <label>Tolerance</label>
         <label>Red:</label>
-        <input type="text" value={this.state.fcr} onChange={e => this.onChange(e)} name="fcr" />
+        <label>{pixel[0]}</label>
         <input type="text" value={this.state.rcr} onChange={e => this.onChange(e)} name="rcr" />
         <input type="text" value={this.state.tcr} onChange={e => this.onChange(e)} name="tcr" />
         <label>Green:</label>
-        <input type="text" value={this.state.fcg} onChange={e => this.onChange(e)} name="fcg" />
+        <label>{pixel[1]}</label>
         <input type="text" value={this.state.rcg} onChange={e => this.onChange(e)} name="rcg" />
         <input type="text" value={this.state.tcg} onChange={e => this.onChange(e)} name="tcg" />
         <label>Blue:</label>
-        <input type="text" value={this.state.fcb} onChange={e => this.onChange(e)} name="fcb" />
+        <label>{pixel[2]}</label>
         <input type="text" value={this.state.rcb} onChange={e => this.onChange(e)} name="rcb" />
         <input type="text" value={this.state.tcb} onChange={e => this.onChange(e)} name="tcb" />
         <label>Alpha:</label>
-        <input type="text" value={this.state.fca} onChange={e => this.onChange(e)} name="fca" />
+        <label>{pixel[3]}</label>
         <input type="text" value={this.state.rca} onChange={e => this.onChange(e)} name="rca" />
         <input type="text" value={this.state.tca} onChange={e => this.onChange(e)} name="tca" />
-        <button id="replaceBtn" style={btnStyle} type="submit">
-          Replace Colour
+        <label>X:</label>
+        <label>{pixel[4]}</label>
+        <label id="sectionBlank"></label>
+        <label>Y:</label>
+        <label>{pixel[5]}</label>
+        <button id="sectionBtn" style={btnStyle} type="submit">
+          Replace Section Colour
         </button>
       </form>
     );
   }
 }
 
-export default Replace;
+export default Section;

@@ -20,6 +20,10 @@ body {
   margin: auto;
 }
 
+.cross {
+  cursor: crosshair;
+}
+
 button:hover {
   -webkit-box-shadow: 0 0 5px black;
           box-shadow: 0 0 5px black;
