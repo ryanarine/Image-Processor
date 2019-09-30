@@ -30,7 +30,6 @@ export function changeImgData(file1, file2, oldVal, newVal, tolerance) {
   -Returns an array of pixel indices that corresponds to a section in Image originating at pixel with the given tolerance range
 */
 export function getSection(Image, pixel, tolerance) {
-  let start = new Date();
   let [width, height, data] = [Image.width, Image.height, Image.data];
   // Adjacent offsets of pixels starting from 0 deg bearing going clockwise
   let adjacent = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]];
