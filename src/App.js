@@ -217,7 +217,6 @@ class App extends Component {
   }
 
   lighten(ratio, mult = ratio / 100 + 1) {
-    console.log(mult);
     if (this.state.newData) {
       let data = this.state.newData.data;
       this.copy(true);
