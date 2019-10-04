@@ -5,8 +5,8 @@ html {
 
 $textShadow: 1px 0 0 black, -1px 0px 0 black, 0 1px 0 black, 0 -1px 0 black, 0 0 1px black;
 $buttonGradient: linear-gradient(to right, limegreen, #0b0);
-$large: calc(15px + 1vw);
-$small: calc(15px + 0.5vw);
+$large: calc(10px + 1vw);
+$small: calc(10px + 0.5vw);
 
 body {
   background-image: linear-gradient(dodgerblue, blue);
@@ -38,6 +38,7 @@ button {
   border: 2px solid black;
   border-radius: 5px;
   font-size: $small;
+  margin: 0 5px;
 }
 
 .grid {
@@ -49,10 +50,9 @@ button {
   border-radius: 10px;
   max-width: 1200px;
   margin: auto;
-  padding-bottom: 20px;
+  padding-bottom: 5px;
   label {
     font-size: $large;
-    margin-bottom: 10px;
   }
 }
 
@@ -67,4 +67,14 @@ button {
 #newCanvas {
   width: 400px;
   height: 400px;
+}
+
+#leftIcon {
+  background-image: url("./LArrow.PNG");
+  background-size: cover;
+}
+
+#rightIcon {
+  background-image: url("./RArrow.PNG");
+  background-size: cover;
 }

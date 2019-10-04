@@ -31,8 +31,8 @@ export function changeImgData(file1, file2, oldVal, newVal, tolerance) {
 */
 export function getSection(Image, pixel, tolerance) {
   let [width, height, data] = [Image.width, Image.height, Image.data];
-  // Adjacent offsets of pixels starting from 0 deg bearing going clockwise
-  let adjacent = [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]];
+  // Adjacent offsets of pixels (Up, Right, Down, Left)
+  let adjacent = [[0, -1], [1, 0], [0, 1], [-1, 0]];
   // visited[i] indicates whether pixel i has been added to the frontier before
   let visited = new Array(width * height);
   // The array of pixels to return

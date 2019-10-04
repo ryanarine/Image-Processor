@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Tools from "./Tools";
 import { changeImgData, getSection } from "./ToolFunctions";
+import Lighten from "./Lighten";
 
 class App extends Component {
   constructor() {
@@ -15,6 +16,10 @@ class App extends Component {
     this.recentre = this.recentre.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.replaceSection = this.replaceSection.bind(this);
+    this.copy = this.copy.bind(this);
+    this.grayscale = this.grayscale.bind(this);
+    this.negative = this.negative.bind(this);
+    this.lighten = this.lighten.bind(this);
   }
 
   imageChange(event) {
@@ -57,6 +62,8 @@ class App extends Component {
     ctx.putImageData(this.state.imgData, 0, 0);
     // copy image data into other canvas
     this.swapImage(false);
+    // refresh state
+    this.setState({ x1: 0, x2: 0, y1: 0, y2: 0, sample: false, pixel: null });
   }
 
   swapImage(copyNew) {
@@ -137,18 +144,20 @@ class App extends Component {
         let pixel = [r, g, b, a, point[0], point[1]];
         this.setState({ sample: false, pixel });
       }
+    } else if (this.state.sample) {
+      this.setState({ sample: false });
     } else {
       this.recentre(event);
     }
   }
 
-  replaceSection(event, state) {
-    event.preventDefault();
+  replaceSection(state) {
     if (this.state.pixel) {
       let newColour = [state.rcr, state.rcg, state.rcb, state.rca];
       let tolerance = [state.tcr, state.tcg, state.tcb, state.tca];
       let section = getSection(this.state.imgData, this.state.pixel, tolerance);
       let data = this.state.newData.data;
+      this.copy(true);
       // Replace the colour of each pixel in the section
       section.forEach(pixel => {
         data[pixel] = newColour[0];
@@ -164,6 +173,67 @@ class App extends Component {
     }
   }
 
+  // Copy the old data to the new data or vice versa
+  copy(copyToNew) {
+    let data1 = copyToNew ? this.state.imgData.data : this.state.newData.data;
+    let data2 = copyToNew ? this.state.newData.data : this.state.imgData.data;
+    data1.forEach((pixel, index) => (data2[index] = pixel));
+  }
+
+  grayscale() {
+    if (this.state.newData) {
+      let data = this.state.newData.data;
+      this.copy(true);
+      let avg = 0;
+      for (let i = 0; i < data.length; i += 4) {
+        avg = Math.round((data[i] + data[i + 1] + data[i + 2]) / 3);
+        data[i] = avg;
+        data[i + 1] = avg;
+        data[i + 2] = avg;
+      }
+      // Redraw the image
+      document
+        .getElementById("newCanvas")
+        .getContext("2d")
+        .putImageData(this.state.newData, 0, 0);
+    }
+  }
+
+  negative() {
+    if (this.state.newData) {
+      let data = this.state.newData.data;
+      this.copy(true);
+      for (let i = 0; i < data.length; i += 4) {
+        data[i] = 255 - data[i];
+        data[i + 1] = 255 - data[i + 1];
+        data[i + 2] = 255 - data[i + 2];
+      }
+      // Redraw the image
+      document
+        .getElementById("newCanvas")
+        .getContext("2d")
+        .putImageData(this.state.newData, 0, 0);
+    }
+  }
+
+  lighten(ratio, mult = ratio / 100 + 1) {
+    console.log(mult);
+    if (this.state.newData) {
+      let data = this.state.newData.data;
+      this.copy(true);
+      for (let i = 0; i < data.length; i += 4) {
+        data[i] = data[i] * mult > 255 ? 255 : data[i] * mult;
+        data[i + 1] = data[i + 1] * mult > 255 ? 255 : data[i + 1] * mult;
+        data[i + 2] = data[i + 2] * mult > 255 ? 255 : data[i + 2] * mult;
+      }
+      // Redraw the image
+      document
+        .getElementById("newCanvas")
+        .getContext("2d")
+        .putImageData(this.state.newData, 0, 0);
+    }
+  }
+
   render() {
     let cls = this.state.sample ? "container cross" : "container";
     return (
@@ -171,28 +241,56 @@ class App extends Component {
         <div className="grid">
           <label>Old Preview</label>
           <label>New Preview</label>
+
           <div className="transparent">
             <canvas id="canvas" onClick={this.handleClick}></canvas>
           </div>
           <div className="transparent">
             <canvas id="newCanvas" onClick={this.handleClick}></canvas>
           </div>
+
           <input id="upload" type="file" onChange={this.imageChange} hidden />
-          <button onClick={() => document.getElementById("upload").click()}>Upload Image</button>
-          <button onClick={this.download}>Download</button>
-          <button onClick={() => this.swapImage(true)}>Copy new into old</button>
-          <button onClick={() => this.swapImage(false)}>Copy old into new</button>
+
+          <div>
+            <button onClick={() => document.getElementById("upload").click()}>Upload Image</button>
+
+            <button onClick={() => this.swapImage(true)}>
+              <i id="leftIcon" title="Copy new preview to old">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </i>
+            </button>
+          </div>
+
+          <div>
+            <button onClick={this.download}>Download</button>
+            <button onClick={() => this.swapImage(false)}>
+              <i id="rightIcon" title="Copy old preview to new">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </i>
+            </button>
+          </div>
         </div>
+
         <a id="download" href="/" style={{ display: "none" }} download="converted">
           Download
         </a>
+
         <Tools
           replace={this.replace}
           file={this.state.newData}
           click={() => this.setState({ sample: !this.state.sample })}
           pixel={this.state.pixel}
-          submit={this.replaceSection}
+          section={this.replaceSection}
         />
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr", justifyItems: "center" }}>
+          <div>
+            <button onClick={this.grayscale}> Grayscale </button>
+            <button onClick={this.negative}> Negative </button>
+            <Lighten lighten={this.lighten} />
+            <Lighten lighten={value => this.lighten(value, 100 / (value + 100))} text={"Darken"} />
+          </div>
+        </div>
       </div>
     );
   }

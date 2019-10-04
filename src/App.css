@@ -37,7 +37,8 @@ button {
   background-image: linear-gradient(to right, limegreen, #0b0);
   border: 2px solid black;
   border-radius: 5px;
-  font-size: calc(15px + 0.5vw);
+  font-size: calc(10px + 0.5vw);
+  margin: 0 5px;
 }
 
 .grid {
@@ -52,12 +53,11 @@ button {
   border-radius: 10px;
   max-width: 1200px;
   margin: auto;
-  padding-bottom: 20px;
+  padding-bottom: 5px;
 }
 
 .grid label {
-  font-size: calc(15px + 1vw);
-  margin-bottom: 10px;
+  font-size: calc(10px + 1vw);
 }
 
 .transparent {
@@ -72,5 +72,15 @@ button {
 #newCanvas {
   width: 400px;
   height: 400px;
+}
+
+#leftIcon {
+  background-image: url("./LArrow.PNG");
+  background-size: cover;
+}
+
+#rightIcon {
+  background-image: url("./RArrow.PNG");
+  background-size: cover;
 }
 /*# sourceMappingURL=App.css.map */
