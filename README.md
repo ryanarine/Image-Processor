@@ -1,5 +1,16 @@
 # Image-Processor
-This application is an image processing tool that can change the contents of an image in many ways. You can view this application [here](https://ryanarine.github.io/Image-Processor/). Below are some demo GIFs displaying certain features.
+This application is an image processing tool that can change the contents of an image in many ways. <br>
+You can view this application [here](https://ryanarine.github.io/Image-Processor/).
+
+## Goals
+This application is not finished so there are still some things I have yet to implement (this is a growing list): <br>
+-Use Redux for state management (The state is currently scattered all over the place) <br>
+-Zoomable canvas <br>
+-Improved support for replacing colour (Ex: decrease and increase the red and blue values respectively within a section by a specified amount) <br>
+-Undo/Redo
+
+## Demos
+Below are some demo GIFs showing off certain features (The background colours are deformed since GIFs only support 256 colours)
 
 ### Replacing Colour
 In this GIF, I am replacing the pure white pixels in an image of Chess pieces with pure yellow pixels
