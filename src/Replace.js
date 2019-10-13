@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { switchSample, basicImgEffect, section } from "./Actions/toolActions";
 
 class Replace extends Component {
   constructor() {
@@ -15,8 +17,7 @@ class Replace extends Component {
       tcr: 10,
       tcg: 10,
       tcb: 10,
-      tca: 10,
-      pixel: null
+      tca: 10
     };
     this.onChange = this.onChange.bind(this);
     this.replace = this.replace.bind(this);
@@ -42,30 +43,38 @@ class Replace extends Component {
       }
       return { fcr: pixel[0], fcg: pixel[1], fcb: pixel[2], fca: pixel[3], pixel };
     }
-    return { pixel: null };
+    return null;
   }
 
   replace(event) {
     event.preventDefault();
-    this.props.replace(this.state);
+    //this.props.replace(this.state);
+    let state = this.state;
+    let oldVal = [state.fcr, state.fcg, state.fcb, state.fca];
+    let newVal = [state.rcr, state.rcg, state.rcb, state.rca];
+    let tolerance = [state.tcr, state.tcg, state.tcb, state.tca];
+    this.props.basicImgEffect("REPLACE", [oldVal, newVal, tolerance]);
   }
 
   click(event) {
     event.preventDefault();
-    this.props.click();
+    this.props.switchSample();
   }
 
   section(event) {
     event.preventDefault();
-    let pixel = this.state.pixel;
+    let pixel = this.props.pixel;
     let state = this.state;
     if (pixel && pixel[0] === state.fcr && pixel[1] === state.fcg && pixel[2] === state.fcb && pixel[3] === state.fca) {
-      this.props.section(this.state);
+      let newVal = [state.rcr, state.rcg, state.rcb, state.rca];
+      let tolerance = [state.tcr, state.tcg, state.tcb, state.tca];
+      this.props.section(newVal, tolerance);
     } else {
       alert("You must first specify a section to paint. Click the cursor icon and then click on an area of the canvas.");
     }
   }
 
+  // Helps the user navigate the input boxes using arrow keys
   navigate(event) {
     let key = event.which;
     if (key >= 37 && key <= 40) {
@@ -76,12 +85,16 @@ class Replace extends Component {
       let num = start === "f" ? 1 : start === "r" ? 2 : 3;
       num += end === "r" ? 0 : end === "g" ? 3 : end === "b" ? 6 : 9;
       if (key === 37) {
+        // Left
         num -= event.target.selectionStart === 0 ? 1 : num;
       } else if (key === 38) {
+        // Up
         num -= 3;
       } else if (key === 39) {
+        // Right
         num += event.target.selectionStart === event.target.value.length ? 1 : 12;
       } else {
+        // Down
         num += 3;
       }
       if (num >= 1 && num <= 12) {
@@ -96,7 +109,7 @@ class Replace extends Component {
         <label></label>
         <span>
           <label>Find</label>
-          <button onClick={this.click} title="Click section on canvas">
+          <button onClick={this.click} title="Click section on canvas" className="infoTool">
             <i id="clickIcon">&nbsp;&nbsp;&nbsp;&nbsp;</i>
           </button>
         </span>
@@ -127,4 +140,9 @@ class Replace extends Component {
   }
 }
 
-export default Replace;
+export default connect(
+  state => ({
+    pixel: state.pixel
+  }),
+  { switchSample, basicImgEffect, section }
+)(Replace);

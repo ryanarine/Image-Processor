@@ -7,6 +7,11 @@
   justify-items: center;
   row-gap: 5px;
   padding-bottom: 5px;
+  width: 80%;
+}
+
+.replaceGrid input {
+  width: 75px;
 }
 
 #replaceBtns {
@@ -15,12 +20,8 @@
   grid-column: 2 / 5;
 }
 
-.replaceGrid input {
-  text-align: center;
-}
-
 #clickIcon {
-  background-image: url("mouse.png");
+  background-image: url("../Images/mouse.png");
   background-size: cover;
 }
 /*# sourceMappingURL=Tools.css.map */

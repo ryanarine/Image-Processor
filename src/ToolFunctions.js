@@ -1,28 +1,22 @@
 /*
-  -file1 and file2 are both ImageData objects
+  -data is an array of pixels
   -oldVal and newVal are pixels (rgba values in an array)
   -tolerance is an rgba range
-  searches the pixels in file1 looking for a match with oldVal within the given tolerance range.
-  corresponding pixels in file2 that were matched are changed to newVal
-  corresponding pixels in file2 that were unmatched are changed to the unmatched pixel
+  searches the pixels in data looking for a match with oldVal within the given tolerance range.
+  matched pixels get changed to newVal
   */
-export function changeImgData(file1, file2, oldVal, newVal, tolerance) {
+export function changeImgData(data, oldVal, newVal, tolerance) {
   let match = false;
-  let imgData1 = file1.data;
-  let imgData2 = file2.data;
-  for (let i = 0; i < imgData1.length; i += 4) {
-    match = isMatch([imgData1[i], imgData1[i + 1], imgData1[i + 2], imgData1[i + 3]], oldVal, tolerance);
+  for (let i = 0; i < data.length; i += 4) {
+    match = isMatch([data[i], data[i + 1], data[i + 2], data[i + 3]], oldVal, tolerance);
     if (match) {
       for (let offset = 0; offset < 4; offset++) {
-        imgData2[i + offset] = newVal[offset];
-      }
-    } else {
-      for (let offset = 0; offset < 4; offset++) {
-        imgData2[i + offset] = imgData1[i + offset];
+        data[i + offset] = newVal[offset];
       }
     }
   }
 }
+
 /*
   -Image is an ImageData objects
   -pixel ([r,g,b,a,x,y]) is a pixel in Image containing its x and y coordinate
@@ -58,6 +52,7 @@ export function getSection(Image, pixel, tolerance) {
       // Add pixel to section
       section.push(y * width * 4 + x * 4);
       // Add adjacent pixels to frontier
+      // eslint-disable-next-line
       adjacent.forEach(adj => {
         // If they have not been added before
         if (!visited[(y + adj[1]) * width + x + adj[0]]) {
@@ -68,6 +63,35 @@ export function getSection(Image, pixel, tolerance) {
     }
   }
   return section;
+}
+
+// Grayscales the image data
+export function grayscale(data) {
+  let avg = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    avg = Math.round((data[i] + data[i + 1] + data[i + 2]) / 3);
+    data[i] = avg;
+    data[i + 1] = avg;
+    data[i + 2] = avg;
+  }
+}
+
+// Negates the image data
+export function negative(data) {
+  for (let i = 0; i < data.length; i += 4) {
+    data[i] = 255 - data[i];
+    data[i + 1] = 255 - data[i + 1];
+    data[i + 2] = 255 - data[i + 2];
+  }
+}
+
+// Change the light intensity of the data by the given multiplier
+export function lighten(data, mult) {
+  for (let i = 0; i < data.length; i += 4) {
+    data[i] = data[i] * mult > 255 ? 255 : data[i] * mult;
+    data[i + 1] = data[i + 1] * mult > 255 ? 255 : data[i + 1] * mult;
+    data[i + 2] = data[i + 2] * mult > 255 ? 255 : data[i + 2] * mult;
+  }
 }
 
 // returns true if the two pixels are similar enough according to the tolerance range

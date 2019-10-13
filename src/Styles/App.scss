@@ -5,6 +5,7 @@ html {
 
 $textShadow: 1px 0 0 black, -1px 0px 0 black, 0 1px 0 black, 0 -1px 0 black, 0 0 1px black;
 $buttonGradient: linear-gradient(to right, limegreen, #0b0);
+$infoButtonGradient: linear-gradient(to right, #0af, #07f);
 $large: calc(10px + 1vw);
 $small: calc(10px + 0.5vw);
 
@@ -41,6 +42,15 @@ button {
   margin: 0 5px;
 }
 
+button.infoTool {
+  background-image: $infoButtonGradient;
+}
+
+input {
+  text-align: center;
+  border: 2px solid black;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -57,7 +67,7 @@ button {
 }
 
 .transparent {
-  background-image: url("./transparent.jpg");
+  background-image: url("../Images/transparent.jpg");
   border: 1px solid black;
   box-shadow: 5px 5px 20px black;
 }
@@ -70,11 +80,11 @@ button {
 }
 
 #leftIcon {
-  background-image: url("./LArrow.PNG");
+  background-image: url("../Images/LArrow.PNG");
   background-size: cover;
 }
 
 #rightIcon {
-  background-image: url("./RArrow.PNG");
+  background-image: url("../Images/RArrow.PNG");
   background-size: cover;
 }

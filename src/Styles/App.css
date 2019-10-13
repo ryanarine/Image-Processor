@@ -41,6 +41,16 @@ button {
   margin: 0 5px;
 }
 
+button.infoTool {
+  background-image: -webkit-gradient(linear, left top, right top, from(#0af), to(#07f));
+  background-image: linear-gradient(to right, #0af, #07f);
+}
+
+input {
+  text-align: center;
+  border: 2px solid black;
+}
+
 .grid {
   display: -ms-grid;
   display: grid;
@@ -61,7 +71,7 @@ button {
 }
 
 .transparent {
-  background-image: url("./transparent.jpg");
+  background-image: url("../Images/transparent.jpg");
   border: 1px solid black;
   -webkit-box-shadow: 5px 5px 20px black;
           box-shadow: 5px 5px 20px black;
@@ -75,12 +85,12 @@ button {
 }
 
 #leftIcon {
-  background-image: url("./LArrow.PNG");
+  background-image: url("../Images/LArrow.PNG");
   background-size: cover;
 }
 
 #rightIcon {
-  background-image: url("./RArrow.PNG");
+  background-image: url("../Images/RArrow.PNG");
   background-size: cover;
 }
 /*# sourceMappingURL=App.css.map */
