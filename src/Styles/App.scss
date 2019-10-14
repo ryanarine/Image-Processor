@@ -6,12 +6,13 @@ html {
 $textShadow: 1px 0 0 black, -1px 0px 0 black, 0 1px 0 black, 0 -1px 0 black, 0 0 1px black;
 $buttonGradient: linear-gradient(to right, limegreen, #0b0);
 $infoButtonGradient: linear-gradient(to right, #0af, #07f);
-$large: calc(10px + 1vw);
-$small: calc(10px + 0.5vw);
+$fileGradient: linear-gradient(to right, #f00, #b00);
+$large: 20px;
+$small: 18px;
 
 body {
-  background-image: linear-gradient(dodgerblue, blue);
-  background-size: cover;
+  background-image: linear-gradient(dodgerblue, blue, darkblue, blue, dodgerblue);
+  background-size: 100% 400%;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: white;
   text-shadow: $textShadow;
@@ -28,7 +29,7 @@ body {
 }
 
 button:hover {
-  box-shadow: 0 0 5px black;
+  box-shadow: 0 0 5px 1px black;
 }
 
 button {
@@ -40,6 +41,10 @@ button {
   border-radius: 5px;
   font-size: $small;
   margin: 0 5px;
+}
+
+button.fileBtn {
+  background-image: $fileGradient;
 }
 
 button.infoTool {
@@ -79,6 +84,17 @@ input {
   width: 400px;
   height: 400px;
 }
+/* Icons */
+
+#uploadIcon {
+  background-image: url("../Images/upload.PNG");
+  background-size: cover;
+}
+
+#downloadIcon {
+  background-image: url("../Images/download.PNG");
+  background-size: cover;
+}
 
 #leftIcon {
   background-image: url("../Images/LArrow.PNG");
@@ -87,5 +103,15 @@ input {
 
 #rightIcon {
   background-image: url("../Images/RArrow.PNG");
+  background-size: cover;
+}
+
+#plusIcon {
+  background-image: url("../Images/plus.PNG");
+  background-size: cover;
+}
+
+#minusIcon {
+  background-image: url("../Images/minus.PNG");
   background-size: cover;
 }

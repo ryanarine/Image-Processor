@@ -7,17 +7,25 @@ function Upload(props) {
   return (
     <div>
       <input id="upload" type="file" onChange={props.change} hidden />
-      <button onClick={() => document.getElementById("upload").click()}>Upload Image</button>
+      <button className="fileBtn" onClick={() => document.getElementById("upload").click()}>
+        <i id="uploadIcon" title="Upload Image">
+          &nbsp;&nbsp;&nbsp;&nbsp;
+        </i>
+      </button>
       <button onClick={() => dispatch(swap(false))}>
         <i id="leftIcon" title="Copy new preview to old">
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </i>
       </button>
       <button className="infoTool" onClick={() => dispatch(zoom(false, false))}>
-        +
+        <i id="plusIcon" title="Zoom in">
+          &nbsp;&nbsp;&nbsp;&nbsp;
+        </i>
       </button>
       <button className="infoTool" onClick={() => dispatch(zoom(true, false))}>
-        -
+        <i id="minusIcon" title="Zoom out">
+          &nbsp;&nbsp;&nbsp;&nbsp;
+        </i>
       </button>
     </div>
   );

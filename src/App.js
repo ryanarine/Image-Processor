@@ -145,3 +145,5 @@ export default connect(
   state => ({ ...state }),
   { setImgData, refresh, center, updatePixel, basicImgEffect, swap, switchSample }
 )(App);
+
+//TODO: add icons for zoom, improved colour replacement support
