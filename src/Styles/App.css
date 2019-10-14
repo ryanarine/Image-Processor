@@ -44,6 +44,7 @@ button {
 button.infoTool {
   background-image: -webkit-gradient(linear, left top, right top, from(#0af), to(#07f));
   background-image: linear-gradient(to right, #0af, #07f);
+  margin: 0 2px;
 }
 
 input {

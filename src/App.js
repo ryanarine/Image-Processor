@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setImgData, refresh, updatePoint, updatePixel, basicImgEffect, swap } from "./Actions/toolActions";
+import { setImgData, refresh, center, updatePixel, basicImgEffect, swap, switchSample } from "./Actions/toolActions";
 import Tools from "./Tools";
 import SimpleTools from "./SimpleTools";
 import "./Styles/App.css";
@@ -12,7 +12,7 @@ class App extends Component {
     super();
     this.imageChange = this.imageChange.bind(this);
     this.download = this.download.bind(this);
-    this.recentre = this.recenter.bind(this);
+    this.recenter = this.recenter.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -84,59 +84,18 @@ class App extends Component {
   recenter(event) {
     let canvas = event.target;
     if (this.props.imgData && (this.props.imgData.width > canvas.width || this.props.imgData.height > canvas.height)) {
-      let ctx = canvas.getContext("2d");
-      let [x, y, imgData] =
-        canvas.id === "canvas"
-          ? [this.props.x1, this.props.y1, this.props.imgData]
-          : [this.props.x2, this.props.y2, this.props.newData];
-      let half = canvas.width / 2;
-
-      // x/y + pageX/pageY + offsetLeft/offsetTop = x/y coordinate of clicked point
-      // Subtract by half to get the top left coordinate if clicked point was the center
-      let point = [x + event.pageX - canvas.offsetLeft - half, y + event.pageY - canvas.offsetTop - half];
-      // Compensate for boundaries
-      if (imgData.width < canvas.width || point[0] < 0) {
-        point[0] = 0;
-      } else {
-        point[0] = point[0] > imgData.width - canvas.width ? imgData.width - canvas.width : point[0];
-      }
-      if (imgData.height < canvas.height || point[1] < 0) {
-        point[1] = 0;
-      } else {
-        point[1] = point[1] > imgData.height - canvas.height ? imgData.height - canvas.height : point[1];
-      }
-
-      // Recenter image if the center point has changed
-      if (point[0] !== x || point[1] !== y) {
-        // Update state
-        this.props.updatePoint(canvas.id === "newCanvas", point[0], point[1]);
-        // Construct the recentered image data
-        let [width1, height1] = [imgData.width, imgData.height];
-        let [width2, height2] = [width1 - point[0], height1 - point[1]];
-        // Construct only the parts we need
-        width2 = Math.min(canvas.width, width2);
-        height2 = Math.min(canvas.height, height2);
-        let data = new Uint8ClampedArray(width2 * height2 * 4);
-        // Copy the image data
-        for (let row = 0; row < height2; row++) {
-          for (let col = 0; col < width2; col++) {
-            for (let val = 0; val < 4; val++) {
-              data[row * width2 * 4 + col * 4 + val] =
-                imgData.data[(point[1] + row) * width1 * 4 + (point[0] + col) * 4 + val];
-            }
-          }
-        }
-        // Draw image
-        imgData = new ImageData(data, width2, height2);
-        ctx.putImageData(imgData, 0, 0);
-      }
+      this.props.center(canvas, event.pageX, event.pageY);
     }
   }
 
   handleClick(event) {
     if (this.props.imgData && this.props.sample && event.target.id === "canvas") {
       let canvas = event.target;
-      let point = [event.pageX - canvas.offsetLeft + this.props.x1, event.pageY - canvas.offsetTop + this.props.y1];
+      let [ratioX, ratioY] = [canvas.width / canvas.scrollWidth, canvas.height / canvas.scrollHeight];
+      let point = [
+        Math.round((event.pageX - canvas.offsetLeft) * ratioX + this.props.x1),
+        Math.round((event.pageY - canvas.offsetTop) * ratioY + this.props.y1)
+      ];
       if (point[0] >= 0 && point[0] <= this.props.imgData.width && point[1] >= 0 && point[1] <= this.props.imgData.height) {
         let r = this.props.imgData.data[point[1] * this.props.imgData.width * 4 + point[0] * 4];
         let g = this.props.imgData.data[point[1] * this.props.imgData.width * 4 + point[0] * 4 + 1];
@@ -146,7 +105,7 @@ class App extends Component {
         this.props.updatePixel(pixel);
       }
     } else if (this.props.sample) {
-      this.props.updatePixel();
+      this.props.switchSample();
     } else {
       this.recenter(event);
     }
@@ -184,5 +143,5 @@ class App extends Component {
 
 export default connect(
   state => ({ ...state }),
-  { setImgData, refresh, updatePoint, updatePixel, basicImgEffect, swap }
+  { setImgData, refresh, center, updatePixel, basicImgEffect, swap, switchSample }
 )(App);

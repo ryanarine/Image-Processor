@@ -48,7 +48,6 @@ class Replace extends Component {
 
   replace(event) {
     event.preventDefault();
-    //this.props.replace(this.state);
     let state = this.state;
     let oldVal = [state.fcr, state.fcg, state.fcb, state.fca];
     let newVal = [state.rcr, state.rcg, state.rcb, state.rca];
@@ -79,6 +78,9 @@ class Replace extends Component {
     let key = event.which;
     if (key >= 37 && key <= 40) {
       let parent = event.target.parentElement;
+      if (parent.id !== "replaceGrid") {
+        return;
+      }
       let name = event.target.name;
       let start = name[0];
       let end = name[2];
@@ -105,7 +107,7 @@ class Replace extends Component {
 
   render() {
     return (
-      <form id="e" className="replaceGrid" onKeyDown={this.navigate}>
+      <form id="replaceGrid" className="replaceGrid" onKeyDown={this.navigate}>
         <label></label>
         <span>
           <label>Find</label>
