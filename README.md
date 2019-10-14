@@ -4,10 +4,11 @@ You can view this application [here](https://ryanarine.github.io/Image-Processor
 
 ## Goals
 This application is not finished so there are still some things I have yet to implement (this is a growing list): <br>
--Use Redux for state management (The state is currently scattered all over the place) <br>
--Zoomable canvas <br>
 -Improved support for replacing colour (Ex: decrease and increase the red and blue values respectively within a section by a specified amount) <br>
--Undo/Redo
+-Undo/Redo support <br>
+-Two buttons that copy one canvas' coordinates and zoom level to the other <br>
+-Eye Dropper button <br>
+-Colour Picker button
 
 ## Demos
 Below are some demo GIFs showing off certain features (The background colours are deformed since GIFs only support 256 colours)
