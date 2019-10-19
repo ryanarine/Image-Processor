@@ -89,7 +89,7 @@ class App extends Component {
   }
 
   handleClick(event) {
-    if (this.props.imgData && this.props.sample && event.target.id === "canvas") {
+    if (this.props.imgData && this.props.sample) {
       let canvas = event.target;
       let [ratioX, ratioY] = [canvas.width / canvas.scrollWidth, canvas.height / canvas.scrollHeight];
       let point = [
@@ -106,6 +106,7 @@ class App extends Component {
       }
     } else if (this.props.sample) {
       this.props.switchSample();
+      alert("You must upload an image first. Click the upload button to upload an image.");
     } else {
       this.recenter(event);
     }
@@ -142,8 +143,8 @@ class App extends Component {
 }
 
 export default connect(
-  state => ({ ...state }),
+  state => ({ ...state.image }),
   { setImgData, refresh, center, updatePixel, basicImgEffect, swap, switchSample }
 )(App);
 
-//TODO: add icons for zoom, improved colour replacement support
+//TODO: add eyedropper support for pixel and canvas

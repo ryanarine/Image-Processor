@@ -3,10 +3,10 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import imageReducer, { initialState } from "./Reducers/imageReducer.js";
+import rootReducer from "./Reducers/rootReducer";
 import App from "./App";
 
-let store = createStore(imageReducer, initialState, applyMiddleware(thunk));
+let store = createStore(rootReducer, {}, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>

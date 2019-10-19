@@ -49,7 +49,28 @@ button.fileBtn {
 button.infoTool {
   background-image: -webkit-gradient(linear, left top, right top, from(#0af), to(#07f));
   background-image: linear-gradient(to right, #0af, #07f);
-  margin: 0 2px;
+}
+
+button.findBtn {
+  background-image: none;
+  background-color: #222;
+  color: white;
+  text-shadow: none;
+  font-size: inherit;
+  margin: 0 1px;
+  position: relative;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  outline: none;
+  min-width: 25px;
+}
+
+select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  text-align-last: center;
+  border: 2px solid black;
 }
 
 input {

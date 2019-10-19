@@ -11,7 +11,14 @@ export const switchSample = () => ({ type: "SAMPLE" });
 
 export const basicImgEffect = (effect, payload) => ({ type: "BASIC", effect, payload });
 
-export const section = (newVal, tolerance) => ({ type: "SECTION", newVal, tolerance });
+export const section = (comparisons, oldVal, operators, newVal, tolerance) => ({
+  type: "SECTION",
+  comparisons,
+  oldVal,
+  operators,
+  newVal,
+  tolerance
+});
 
 export const swap = copyToNew => ({ type: "SWAP", copyToNew });
 

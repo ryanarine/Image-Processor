@@ -1,4 +1,4 @@
-import { grayscale, negative, lighten, changeImgData, getSection } from "../ToolFunctions";
+import { grayscale, negative, lighten, changeImgData, getSection, operate } from "../ToolFunctions";
 
 export const initialState = {
   imgData: null,
@@ -78,18 +78,20 @@ function imageReducer(state = initialState, action) {
       return state;
     case "SECTION": {
       if (state.pixel && state.newData) {
-        let section = getSection(state.imgData, state.pixel, action.tolerance);
+        let section = getSection(state.imgData, state.pixel, action.comparisons, action.oldVal, action.tolerance);
         let data = state.newData.data;
         copy(state.imgData.data, state.newData.data);
         // Replace the colour of each pixel in the section
         let newVal = action.newVal;
+        let operators = action.operators;
         section.forEach(pixel => {
-          data[pixel] = newVal[0];
-          data[pixel + 1] = newVal[1];
-          data[pixel + 2] = newVal[2];
-          data[pixel + 3] = newVal[3];
+          operate(operators, data, newVal, pixel);
         });
         redraw(state.x2, state.y2, state.newData);
+      } else if (!state.pixel) {
+        alert(
+          "You must first specify a section to paint. Click the cursor icon and then click on an area in the left canvas."
+        );
       }
       return state;
     }
