@@ -38,7 +38,7 @@ class ReplaceTool extends Component {
     let comparisons = state.cc;
     let oldVal = state.fc;
     let operators = state.oc;
-    let newVal = state.rc;
+    let newVal = [state.rc[0], state.rc[1], state.rc[2], state.rc[3]];
     for (let i = 0; i < operators.length; i++) {
       if (operators[i] === "*" || operators[i] === "/") {
         newVal[i] = newVal[i] / 100 + 1;
