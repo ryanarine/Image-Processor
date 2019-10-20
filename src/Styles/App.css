@@ -20,10 +20,16 @@ body {
   margin: auto;
 }
 
+/* Cursor types */
 .cross {
   cursor: crosshair;
 }
 
+.dropper {
+  cursor: url("../Images/dropperCursor.PNG") 0 0, crosshair;
+}
+
+/* Buttons */
 button:hover {
   -webkit-box-shadow: 0 0 5px 1px black;
           box-shadow: 0 0 5px 1px black;
@@ -44,11 +50,15 @@ button {
 button.fileBtn {
   background-image: -webkit-gradient(linear, left top, right top, from(#f00), to(#b00));
   background-image: linear-gradient(to right, #f00, #b00);
+  font-size: 20px;
+  padding: 3px;
 }
 
 button.infoTool {
   background-image: -webkit-gradient(linear, left top, right top, from(#0af), to(#07f));
   background-image: linear-gradient(to right, #0af, #07f);
+  font-size: 15px;
+  padding: 3px;
 }
 
 button.findBtn {
@@ -65,14 +75,7 @@ button.findBtn {
   min-width: 25px;
 }
 
-select {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
-  text-align-last: center;
-  border: 2px solid black;
-}
-
+/* Inputs */
 input {
   text-align: center;
   border: 2px solid black;
@@ -97,6 +100,7 @@ input {
   font-size: 20px;
 }
 
+/* Canvases */
 .transparent {
   background-image: url("../Images/transparent.jpg");
   border: 1px solid black;
@@ -114,31 +118,49 @@ input {
 /* Icons */
 #uploadIcon {
   background-image: url("../Images/upload.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #downloadIcon {
   background-image: url("../Images/download.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #leftIcon {
   background-image: url("../Images/LArrow.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #rightIcon {
   background-image: url("../Images/RArrow.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #plusIcon {
   background-image: url("../Images/plus.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #minusIcon {
   background-image: url("../Images/minus.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#dropperIcon {
+  background-image: url("../Images/dropper.PNG");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#mouseDropperIcon {
+  background-image: url("../Images/mousePlusDropper.PNG");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 /*# sourceMappingURL=App.css.map */

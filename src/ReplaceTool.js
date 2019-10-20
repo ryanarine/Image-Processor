@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { store } from "./index";
 import { switchSample, basicImgEffect, section } from "./Actions/toolActions";
-import { updateOption, updateInput } from "./Actions/replaceActions";
+import { updateOption, updateInput, sampleColour } from "./Actions/replaceActions";
 import Find from "./Find";
 import Replace from "./Replace";
 import { colours, columnInitials } from "./Constants";
 import Tolerance from "./Tolerance";
+import { throwStatement } from "@babel/types";
 
 class ReplaceTool extends Component {
   constructor() {
@@ -13,6 +15,7 @@ class ReplaceTool extends Component {
     this.replace = this.replace.bind(this);
     this.section = this.section.bind(this);
     this.navigate = this.navigate.bind(this);
+    this.copy = this.copy.bind(this);
   }
 
   replace() {
@@ -20,7 +23,7 @@ class ReplaceTool extends Component {
     let comparisons = state.cc;
     let oldVal = state.fc;
     let operators = state.oc;
-    let newVal = state.rc;
+    let newVal = [state.rc[0], state.rc[1], state.rc[2], state.rc[3]];
     for (let i = 0; i < operators.length; i++) {
       if (operators[i] === "*" || operators[i] === "/") {
         newVal[i] = newVal[i] / 100 + 1;
@@ -89,6 +92,15 @@ class ReplaceTool extends Component {
     }
   }
 
+  copy() {
+    let pixel = store.getState().image.pixel;
+    if (pixel) {
+      this.props.sampleColour(pixel[0], pixel[1], pixel[2], pixel[3]);
+    } else {
+      alert("You must specify a pixel first. Click on the cursor icon and then click on a pixel on the canvas to do so");
+    }
+  }
+
   render() {
     let frt = colours.map((colour, index) => (
       <React.Fragment>
@@ -102,8 +114,29 @@ class ReplaceTool extends Component {
         <label></label>
         <span>
           <label>Find</label>
-          <button onClick={this.props.switchSample} type="button" title="Click section on canvas" className="infoTool">
+          <button
+            onClick={() => this.props.switchSample("PIXEL")}
+            type="button"
+            title="Specify a section on the canvas by clicking on a pixel within that section"
+            className="infoTool"
+          >
             <i id="clickIcon">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+          </button>
+          <button
+            onClick={() => this.props.switchSample("COLOUR")}
+            type="button"
+            title="Sample a pixel's colour off one of the canvases"
+            className="infoTool"
+          >
+            <i id="dropperIcon">&nbsp;&nbsp;&nbsp;&nbsp;</i>
+          </button>
+          <button
+            type="button"
+            onClick={this.copy}
+            title="Copy the selected pixel's colour to the inputs"
+            className="infoTool"
+          >
+            <i id="mouseDropperIcon">&nbsp;&nbsp;&nbsp;&nbsp;</i>
           </button>
         </span>
         <label>Replace</label>
@@ -131,5 +164,5 @@ class ReplaceTool extends Component {
 
 export default connect(
   state => ({ ...state.replace }),
-  { switchSample, basicImgEffect, section, updateOption, updateInput }
+  { switchSample, basicImgEffect, section, updateOption, updateInput, sampleColour }
 )(ReplaceTool);

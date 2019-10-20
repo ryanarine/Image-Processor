@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setImgData, refresh, center, updatePixel, basicImgEffect, swap, switchSample } from "./Actions/toolActions";
+import { sampleColour } from "./Actions/replaceActions";
 import Tools from "./Tools";
 import SimpleTools from "./SimpleTools";
 import "./Styles/App.css";
@@ -89,7 +90,7 @@ class App extends Component {
   }
 
   handleClick(event) {
-    if (this.props.imgData && this.props.sample) {
+    if (this.props.imgData && (this.props.pixelSample || this.props.colourSample)) {
       let canvas = event.target;
       let [ratioX, ratioY] = [canvas.width / canvas.scrollWidth, canvas.height / canvas.scrollHeight];
       let point = [
@@ -101,11 +102,15 @@ class App extends Component {
         let g = this.props.imgData.data[point[1] * this.props.imgData.width * 4 + point[0] * 4 + 1];
         let b = this.props.imgData.data[point[1] * this.props.imgData.width * 4 + point[0] * 4 + 2];
         let a = this.props.imgData.data[point[1] * this.props.imgData.width * 4 + point[0] * 4 + 3];
-        let pixel = [r, g, b, a, point[0], point[1]];
-        this.props.updatePixel(pixel);
+        if (this.props.pixelSample) {
+          let pixel = [r, g, b, a, point[0], point[1]];
+          this.props.updatePixel(pixel);
+        } else {
+          this.props.sampleColour(r, g, b, a);
+        }
       }
-    } else if (this.props.sample) {
-      this.props.switchSample();
+    } else if (this.props.pixelSample) {
+      this.props.switchSample("PIXEL");
       alert("You must upload an image first. Click the upload button to upload an image.");
     } else {
       this.recenter(event);
@@ -144,7 +149,5 @@ class App extends Component {
 
 export default connect(
   state => ({ ...state.image }),
-  { setImgData, refresh, center, updatePixel, basicImgEffect, swap, switchSample }
+  { setImgData, refresh, center, updatePixel, basicImgEffect, swap, switchSample, sampleColour }
 )(App);
-
-//TODO: add eyedropper support for pixel and canvas

@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 import rootReducer from "./Reducers/rootReducer";
 import App from "./App";
 
-let store = createStore(rootReducer, {}, applyMiddleware(thunk));
+export const store = createStore(rootReducer, {}, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>

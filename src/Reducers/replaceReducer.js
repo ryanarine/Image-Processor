@@ -50,6 +50,12 @@ function replaceReducer(state = initialState, action) {
       }
       return state;
     }
+    case "SAMPLECOLOUR":
+      state.fc[0] = action.r;
+      state.fc[1] = action.g;
+      state.fc[2] = action.b;
+      state.fc[3] = action.a;
+      return state;
     default:
       return state;
   }

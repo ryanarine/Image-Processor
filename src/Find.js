@@ -2,7 +2,32 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { updateInput, findModal } from "./Actions/replaceActions";
 import Options from "./Options";
-import { colours, comparisons } from "./Constants";
+import { colours, fullColours, comparisons } from "./Constants";
+
+const mapCompareToTitle = (compare, value, index) => {
+  let colour = fullColours[index];
+  var msg = "";
+  switch (compare) {
+    case "=":
+      msg = `Select only pixels that have a ${colour} value that is within the tolerance range of ${value}`;
+      break;
+    case ">":
+      msg = `Select only pixels that have a ${colour} value greater than ${value}`;
+      break;
+    case ">=":
+      msg = `Select only pixels that have a ${colour} value greater than or equal to ${value}`;
+      break;
+    case "<":
+      msg = `Select only pixels that have a ${colour} value less than ${value}`;
+      break;
+    case "<=":
+      msg = `Select only pixels that have a ${colour} value less than or equal to ${value}`;
+      break;
+    default:
+      return "";
+  }
+  return msg;
+};
 
 export default function Find(props) {
   const index = props.index;
@@ -17,6 +42,7 @@ export default function Find(props) {
       <span style={{ position: "relative" }}>
         <button
           type="button"
+          title={mapCompareToTitle(compare, value, index)}
           onClick={e => {
             e.stopPropagation();
             dispatch(findModal(index));

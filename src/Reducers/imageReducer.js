@@ -7,7 +7,8 @@ export const initialState = {
   x2: 0,
   y1: 0,
   y2: 0,
-  sample: false,
+  pixelSample: false,
+  colourSample: false,
   pixel: null,
   zoom1: 0,
   zoom2: 0
@@ -56,11 +57,17 @@ function imageReducer(state = initialState, action) {
       }
       return state;
     case "PIXEL":
-      changeCursor(state.sample);
-      return { ...state, sample: false, pixel: action.pixel };
+      changeCursor(state.pixelSample);
+      return { ...state, pixelSample: false, pixel: action.pixel };
     case "SAMPLE":
-      changeCursor(state.sample);
-      return { ...state, sample: !state.sample };
+      if (action.sample === "PIXEL") {
+        changeCursor(state.pixelSample);
+        return { ...state, pixelSample: !state.pixelSample, colourSample: false };
+      } else if (action.sample === "COLOUR") {
+        changeCursor(state.colourSample, false);
+        return { ...state, pixelSample: false, colourSample: !state.colourSample };
+      }
+      return state;
     case "BASIC":
       if (state.newData) {
         // Get the effect
@@ -78,6 +85,7 @@ function imageReducer(state = initialState, action) {
       return state;
     case "SECTION": {
       if (state.pixel && state.newData) {
+        document.body.style.cursor = "progress";
         let section = getSection(state.imgData, state.pixel, action.comparisons, action.oldVal, action.tolerance);
         let data = state.newData.data;
         copy(state.imgData.data, state.newData.data);
@@ -88,6 +96,7 @@ function imageReducer(state = initialState, action) {
           operate(operators, data, newVal, pixel);
         });
         redraw(state.x2, state.y2, state.newData);
+        document.body.style.cursor = "default";
       } else if (!state.pixel) {
         alert(
           "You must first specify a section to paint. Click the cursor icon and then click on an area in the left canvas."
@@ -202,8 +211,9 @@ function copy(data1, data2) {
 }
 
 // Change the cursor style
-function changeCursor(sample) {
-  document.getElementById("container").className = sample ? "container" : "container cross";
+function changeCursor(sample, isPixelSample = true) {
+  let cursor = isPixelSample ? "container cross" : "container dropper";
+  document.getElementById("container").className = sample ? "container" : cursor;
 }
 
 export default imageReducer;

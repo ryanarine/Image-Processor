@@ -10,3 +10,5 @@ export const updateOption = (index, value, isOperator) => ({ type: "UPDATEOPTION
 export const replaceModal = index => ({ type: "MODAL", index, replace: true });
 
 export const findModal = index => ({ type: "MODAL", index, replace: false });
+
+export const sampleColour = (r, g, b, a) => ({ type: "SAMPLECOLOUR", r, g, b, a });

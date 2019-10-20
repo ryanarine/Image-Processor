@@ -13,7 +13,7 @@ function Download(props) {
       </button>
       <button onClick={() => dispatch(swap(true))}>
         <i id="rightIcon" title="Copy old preview to new">
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </i>
       </button>
       <button className="infoTool" onClick={() => dispatch(zoom(false, true))}>

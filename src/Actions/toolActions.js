@@ -7,7 +7,7 @@ export const refresh = () => ({ type: "REFRESH" });
 
 export const updatePixel = pixel => ({ type: "PIXEL", pixel });
 
-export const switchSample = () => ({ type: "SAMPLE" });
+export const switchSample = sample => ({ type: "SAMPLE", sample });
 
 export const basicImgEffect = (effect, payload) => ({ type: "BASIC", effect, payload });
 

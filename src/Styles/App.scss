@@ -8,7 +8,9 @@ $buttonGradient: linear-gradient(to right, limegreen, #0b0);
 $infoButtonGradient: linear-gradient(to right, #0af, #07f);
 $fileGradient: linear-gradient(to right, #f00, #b00);
 $large: 20px;
-$small: 18px;
+$medium: 18px;
+$small: 15px;
+$small-padding: 3px;
 
 body {
   background-image: linear-gradient(dodgerblue, blue, darkblue, blue, dodgerblue);
@@ -24,9 +26,17 @@ body {
   margin: auto;
 }
 
+/* Cursor types */
+
 .cross {
   cursor: crosshair;
 }
+
+.dropper {
+  cursor: url("../Images/dropperCursor.PNG") 0 0, crosshair;
+}
+
+/* Buttons */
 
 button:hover {
   box-shadow: 0 0 5px 1px black;
@@ -39,16 +49,20 @@ button {
   background-image: $buttonGradient;
   border: 2px solid black;
   border-radius: 5px;
-  font-size: $small;
+  font-size: $medium;
   margin: 0 5px;
 }
 
 button.fileBtn {
   background-image: $fileGradient;
+  font-size: $large;
+  padding: $small-padding;
 }
 
 button.infoTool {
   background-image: $infoButtonGradient;
+  font-size: $small;
+  padding: $small-padding;
 }
 
 button.findBtn {
@@ -63,11 +77,8 @@ button.findBtn {
   outline: none;
   min-width: 25px;
 }
-select {
-  appearance: none;
-  text-align-last: center;
-  border: 2px solid black;
-}
+
+/* Inputs */
 
 input {
   text-align: center;
@@ -89,6 +100,8 @@ input {
   }
 }
 
+/* Canvases */
+
 .transparent {
   background-image: url("../Images/transparent.jpg");
   border: 1px solid black;
@@ -101,34 +114,53 @@ input {
   width: 400px;
   height: 400px;
 }
+
 /* Icons */
 
 #uploadIcon {
   background-image: url("../Images/upload.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #downloadIcon {
   background-image: url("../Images/download.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #leftIcon {
   background-image: url("../Images/LArrow.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #rightIcon {
   background-image: url("../Images/RArrow.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #plusIcon {
   background-image: url("../Images/plus.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #minusIcon {
   background-image: url("../Images/minus.PNG");
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#dropperIcon {
+  background-image: url("../Images/dropper.PNG");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#mouseDropperIcon {
+  background-image: url("../Images/mousePlusDropper.PNG");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
