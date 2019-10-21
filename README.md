@@ -4,10 +4,10 @@ You can view this application [here](https://ryanarine.github.io/Image-Processor
 
 ## Goals
 This application is not finished so there are still some things I have yet to implement (this is a growing list): <br>
--Improved support for replacing colour (Ex: decrease and increase the red and blue values respectively within a section by a specified amount) <br>
+-Improved support for finding colour (Ex: Find pixels that have a red value that is >= 50% of its total brightness)
+-Improved support for replacing colour (Ex: Increase the blue value of pixels by the red value)
 -Undo/Redo support <br>
 -Two buttons that copy one canvas' coordinates and zoom level to the other <br>
--Eye Dropper button <br>
 -Colour Picker button
 
 ## Demos
@@ -22,6 +22,8 @@ Some white pixels were left over because they weren't pure white. I fix this by 
 ### Replacing Colour within a Section
 In this GIF, I want to make the white background transparent. I first replace all the white pixels with a transparent pixel (alpha value of 0), but this causes the white pieces to also be transparent. To fix this I use the replace section colour tool by first clicking on the background in the canvas. The application will then search the pixels surrounding the pixel I clicked on to identify what pixels belong to the section I selected. I then also select a section within the Queen piece to show this doesn't only work on the background.
 ![Loading...](RCS.gif)
+### Adding and Subtracting Colour
+### Colour Scaling
 ### Other Tools
 In this GIF, I show off the Grayscale, Negative, Lighten and Darken tool. The latter two tools can be applied repeatedly.
 ![Loading...](OT.gif)
