@@ -1,5 +1,5 @@
 # Image-Processor
-This application is an image processing tool that can change the contents of an image in many ways. <br>
+This application is an image processing tool that can change the pixel values of an image in many ways. <br>
 You can view this application [here](https://ryanarine.github.io/Image-Processor/).
 
 ## Goals
