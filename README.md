@@ -4,7 +4,7 @@ You can view this application [here](https://ryanarine.github.io/Image-Processor
 
 ## Goals
 This application is not finished so there are still some things I have yet to implement (this is a growing list): <br>
--Improved support for finding colour (Ex: Find pixels that have a red value that is >= 50% of its total brightness)
+-Improved support for finding colour (Ex: Find pixels that have a red value that is >= 50% of its total brightness) <br>
 -Improved support for replacing colour (Ex: Increase the blue value of pixels by the red value)
 -Undo/Redo support <br>
 -Two buttons that copy one canvas' coordinates and zoom level to the other <br>
