@@ -1,5 +1,5 @@
 # Image-Processor
-This application is an image processing tool that can change the pixel values of an image in many ways. Here is the basic use case: <br>
+This application is an image processing tool that can change the pixel values (RGBA) of an image in many ways. Here is the basic use case: <br>
 1) You specify what kind of pixels you want to change (Ex: all pixels with a red value > 100) using the inputs (1st and 3rd column) <br>
 2) Then you specify how you want to change those pixels (Ex: double the red values) using the inputs (2nd column) <br>
 3) Then you hit the replace colour button and the resulting image will be displayed and available for download (The downloaded file will be in PNG format even if the uploaded wasn't) <br>
