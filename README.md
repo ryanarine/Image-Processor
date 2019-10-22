@@ -1,5 +1,10 @@
 # Image-Processor
-This application is an image processing tool that can change the pixel values of an image in many ways. <br>
+This application is an image processing tool that can change the pixel values of an image in many ways. Here is the basic use case: <br>
+1) You specify what kind of pixels you want to change (Ex: all pixels with a red value > 100) using the inputs (1st and 3rd column) <br>
+2) Then you specify how you want to change those pixels (Ex: double the red values) using the inputs (2nd column) <br>
+3) Then you hit the replace colour button and the resulting image with be displayed and available for download (The downloaded file will be in PNG format even if the uploaded wasn't) <br>
+
+There are more things you can do with this tool, which you can see [below](#demos) <br>
 You can view this application [here](https://ryanarine.github.io/Image-Processor/).
 
 ## Goals
