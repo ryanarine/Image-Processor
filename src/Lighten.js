@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { basicImgEffect } from "./Actions/toolActions";
 
-class Lighten extends Component {
+class Lighten extends PureComponent {
   constructor() {
     super();
     this.state = { val: 0 };
@@ -34,7 +34,4 @@ class Lighten extends Component {
   }
 }
 
-export default connect(
-  () => ({}),
-  { basicImgEffect }
-)(Lighten);
+export default connect(() => ({}), { basicImgEffect })(Lighten);

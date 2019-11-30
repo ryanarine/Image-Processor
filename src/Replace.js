@@ -18,10 +18,10 @@ const mapOperatorToTitle = (operator, value, index) => {
       msg = `Decrease the ${colour} value of the selected pixels by ${value}`;
       break;
     case "*":
-      msg = `Increase the ${colour} value of the selected pixels by ${value}%`;
+      msg = `Multiply the ${colour} value of the selected pixels by ${value / 100 + 1}`;
       break;
     case "/":
-      msg = `Decrease the ${colour} value of the selected pixels by ${value}%`;
+      msg = `Divide the ${colour} value of the selected pixels by ${value / 100 + 1}`;
       break;
     default:
       return "";

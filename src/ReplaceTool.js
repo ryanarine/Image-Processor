@@ -7,7 +7,6 @@ import Find from "./Find";
 import Replace from "./Replace";
 import { colours, columnInitials } from "./Constants";
 import Tolerance from "./Tolerance";
-import { throwStatement } from "@babel/types";
 
 class ReplaceTool extends Component {
   constructor() {
@@ -162,7 +161,11 @@ class ReplaceTool extends Component {
   }
 }
 
-export default connect(
-  state => ({ ...state.replace }),
-  { switchSample, basicImgEffect, section, updateOption, updateInput, sampleColour }
-)(ReplaceTool);
+export default connect(state => ({ ...state.replace }), {
+  switchSample,
+  basicImgEffect,
+  section,
+  updateOption,
+  updateInput,
+  sampleColour
+})(ReplaceTool);
