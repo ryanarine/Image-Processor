@@ -3,6 +3,8 @@ export const setImgData = (isNewCanvas, data) => dispatch => {
   return Promise.resolve();
 };
 
+export const setFileName = name => ({ type: "NAME", name });
+
 export const refresh = () => ({ type: "REFRESH" });
 
 export const updatePixel = pixel => ({ type: "PIXEL", pixel });

@@ -22,6 +22,8 @@ function imageReducer(state = initialState, action) {
   switch (action.type) {
     case "SET":
       return action.isNewCanvas ? { ...state, newData: action.data } : { ...state, imgData: action.data };
+    case "NAME":
+      return {...state, fileName: action.name};
     case "REFRESH":
       return { ...state, x1: 0, x2: 0, y1: 0, y2: 0, sample: false, pixel: null, zoom1: 0, zoom2: 0 };
     case "CENTER":

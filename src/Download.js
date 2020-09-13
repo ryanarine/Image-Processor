@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { swap, zoom } from "./Actions/toolActions";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 
 function Download(props) {
   const dispatch = useDispatch();
+  const [anchor, setAnchor] = useState(null);
+
+  const handleClose = () => setAnchor(null);
+
+  const handleDownload = type => () => {
+    handleClose();
+    props.download(type);
+  };
+
   return (
     <div>
-      <button className="fileBtn" onClick={props.download}>
+      <button className="fileBtn" onClick={e => setAnchor(e.currentTarget)}>
         <i id="downloadIcon" title="Download Image">
           &nbsp;&nbsp;&nbsp;&nbsp;
         </i>
@@ -26,9 +37,11 @@ function Download(props) {
           &nbsp;&nbsp;&nbsp;&nbsp;
         </i>
       </button>
-      <a id="download" href="/" style={{ display: "none" }} download="converted">
-        Download
-      </a>
+      <Menu anchorEl={anchor} keepMounted open={Boolean(anchor)} onClose={handleClose}>
+        <MenuItem onClick={handleDownload("png")}>PNG</MenuItem>
+        <MenuItem onClick={handleDownload("jpeg")}>JPG</MenuItem>
+        <MenuItem onClick={handleDownload("webp")}>WebP</MenuItem>
+      </Menu>
     </div>
   );
 }

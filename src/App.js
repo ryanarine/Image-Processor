@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setImgData, refresh, center, updatePixel, basicImgEffect, swap, switchSample } from "./Actions/toolActions";
+import {
+  setImgData,
+  setFileName,
+  refresh,
+  center,
+  updatePixel,
+  basicImgEffect,
+  swap,
+  switchSample
+} from "./Actions/toolActions";
 import { sampleColour } from "./Actions/replaceActions";
 import Tools from "./Tools";
 import SimpleTools from "./SimpleTools";
@@ -56,6 +65,7 @@ class App extends Component {
         let filedata = read.target.result;
         if (filedata.startsWith("data:image")) {
           img.src = filedata;
+          this.props.setFileName(file.name.substring(0, file.name.lastIndexOf(".")));
         } else {
           alert("That file type is not supported");
         }
@@ -68,16 +78,19 @@ class App extends Component {
   }
 
   // Download new image
-  download() {
-    const link = document.getElementById("download");
+  download(type) {
     if (this.props.imgData) {
-      var canvas = document.createElement("canvas");
+      const link = document.createElement("a");
+      const canvas = document.createElement("canvas");
       canvas.width = this.props.imgData.width;
       canvas.height = this.props.imgData.height;
-      var ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d");
       ctx.putImageData(this.props.newData, 0, 0);
-      link.setAttribute("href", canvas.toDataURL());
+      link.setAttribute("href", canvas.toDataURL(`image/${type}`));
+      link.setAttribute("download", `${this.props.fileName}-converted`);
       link.click();
+      link.remove();
+      canvas.remove();
     }
   }
 
@@ -147,7 +160,14 @@ class App extends Component {
   }
 }
 
-export default connect(
-  state => ({ ...state.image }),
-  { setImgData, refresh, center, updatePixel, basicImgEffect, swap, switchSample, sampleColour }
-)(App);
+export default connect(state => ({ ...state.image }), {
+  setImgData,
+  setFileName,
+  refresh,
+  center,
+  updatePixel,
+  basicImgEffect,
+  swap,
+  switchSample,
+  sampleColour
+})(App);
