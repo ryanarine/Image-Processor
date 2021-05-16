@@ -13,10 +13,11 @@ export const switchSample = sample => ({ type: "SAMPLE", sample });
 
 export const basicImgEffect = (effect, payload) => ({ type: "BASIC", effect, payload });
 
-export const section = (comparisons, oldVal, operators, newVal, tolerance) => ({
+export const section = (comparisons, oldVal, percentages, operators, newVal, tolerance) => ({
   type: "SECTION",
   comparisons,
   oldVal,
+  percentages,
   operators,
   newVal,
   tolerance

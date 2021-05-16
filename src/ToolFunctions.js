@@ -1,14 +1,16 @@
-/*
-  -data is an array of pixels
-  -comparisons specify a comparison operator [=,>,>=,<,<=]
-  -oldVal and newVal are pixels (rgba values in an array)
-  -tolerance is an rgba range (only used when the comparison operator is equality)
-  searches the pixels in data looking for a match with oldVal within the given tolerance range.
-  matched pixels get changed to newVal
-  */
-export function changeImgData(data, comparisons, oldVal, operators, newVal, tolerance) {
+/**
+ * Change the data of an image
+ * @param {Uint8ClampedArray} data - Image data
+ * @param {Array} comparisons - Comparison operators, each one is one of [=,>,>=,<,<=]
+ * @param {Array} oldVal - A pixel or percentage to be matched against according to comparisons
+ * @param {Array} percentages - Boolean array indicating whether to search for absolute or relative values
+ * @param {Array} operators  - Mathematical operators, each one is one of [=,+,-,*,/]
+ * @param {Array} newVal  - A pixel to be operated against according to operators
+ * @param {Array} tolerance  - An rgba range
+ */
+export function changeImgData(data, comparisons, oldVal, percentages, operators, newVal, tolerance) {
   for (let i = 0; i < data.length; i += 4) {
-    if (isMatch(comparisons, [data[i], data[i + 1], data[i + 2], data[i + 3]], oldVal, tolerance)) {
+    if (isMatch(comparisons, data.slice(i, i + 4), oldVal, percentages, tolerance)) {
       operate(operators, data, newVal, i);
     }
   }
@@ -18,13 +20,19 @@ export function changeImgData(data, comparisons, oldVal, operators, newVal, tole
   -Image is an ImageData objects
   -pixel ([r,g,b,a,x,y]) is a pixel in Image containing its x and y coordinate
   -comparisons specify a comparison operator [=,>,>=,<,<=]
+  -percentages is a boolean array indicating whether to search for absolute or relative values
   -tolerance is an rgba range (only used when the comparison operator is equality)
   -Returns an array of pixel indices that corresponds to a section in Image originating at pixel with the given tolerance range
 */
-export function getSection(Image, pixel, comparisons, oldColour, tolerance) {
+export function getSection(Image, pixel, comparisons, oldColour, percentages, tolerance) {
   let [width, height, data] = [Image.width, Image.height, Image.data];
   // Adjacent offsets of pixels (Up, Right, Down, Left)
-  let adjacent = [[0, -1], [1, 0], [0, 1], [-1, 0]];
+  let adjacent = [
+    [0, -1],
+    [1, 0],
+    [0, 1],
+    [-1, 0]
+  ];
   // visited[i] indicates whether pixel i has been added to the frontier before
   let visited = new Array(width * height);
   // The array of pixels to return
@@ -45,7 +53,7 @@ export function getSection(Image, pixel, comparisons, oldColour, tolerance) {
       colour.push(data[y * width * 4 + x * 4 + offset]);
     }
     // Check that the pixel colour is a match
-    if (isMatch(comparisons, colour, oldColour, tolerance)) {
+    if (isMatch(comparisons, colour, oldColour, percentages, tolerance)) {
       // Add pixel to section
       section.push(y * width * 4 + x * 4);
       // Add adjacent pixels to frontier
@@ -91,28 +99,30 @@ export function lighten(data, mult) {
   }
 }
 
-// returns true if the two pixels are similar enough according to the comparison option and the tolerance range
-function isMatch(comparisons, pixel1, pixel2, tolerance) {
+// returns true if the pixel matches the search values according to the comparison option and the tolerance range
+function isMatch(comparisons, pixel, search, percentages, tolerance) {
   let match = true;
-  let compare = comparisons[0];
+  let compare;
+  const totalValue = pixel.slice(0, 3).reduce((sum, val) => sum + val);
+  const values = pixel.map((val, index) => (percentages[index] ? (val / totalValue) * 100 : val));
   for (let offset = 0; offset < 4; offset++) {
     compare = comparisons[offset];
     switch (compare) {
       case "=":
-        match = match && Math.abs(pixel1[offset] - pixel2[offset]) <= tolerance[offset];
+        match = match && Math.abs(values[offset] - search[offset]) <= tolerance[offset];
         break;
       case ">":
-        match = match && pixel1[offset] > pixel2[offset];
+        match = match && values[offset] > search[offset];
         break;
       case ">=":
-        match = match && pixel1[offset] >= pixel2[offset];
+        match = match && values[offset] >= search[offset];
 
         break;
       case "<":
-        match = match && pixel1[offset] < pixel2[offset];
+        match = match && values[offset] < search[offset];
         break;
       case "<=":
-        match = match && pixel1[offset] <= pixel2[offset];
+        match = match && values[offset] <= search[offset];
         break;
       default:
         alert("Something went terribly wrong. Please refresh the page and try again");

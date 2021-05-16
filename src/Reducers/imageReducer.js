@@ -23,7 +23,7 @@ function imageReducer(state = initialState, action) {
     case "SET":
       return action.isNewCanvas ? { ...state, newData: action.data } : { ...state, imgData: action.data };
     case "NAME":
-      return {...state, fileName: action.name};
+      return { ...state, fileName: action.name };
     case "REFRESH":
       return { ...state, x1: 0, x2: 0, y1: 0, y2: 0, sample: false, pixel: null, zoom1: 0, zoom2: 0 };
     case "CENTER":
@@ -88,12 +88,11 @@ function imageReducer(state = initialState, action) {
     case "SECTION": {
       if (state.pixel && state.newData) {
         document.body.style.cursor = "progress";
-        let section = getSection(state.imgData, state.pixel, action.comparisons, action.oldVal, action.tolerance);
-        let data = state.newData.data;
+        const { comparisons, oldVal, percentages, tolerance, newVal, operators } = action;
+        const section = getSection(state.imgData, state.pixel, comparisons, oldVal, percentages, tolerance);
+        const data = state.newData.data;
         copy(state.imgData.data, state.newData.data);
         // Replace the colour of each pixel in the section
-        let newVal = action.newVal;
-        let operators = action.operators;
         section.forEach(pixel => {
           operate(operators, data, newVal, pixel);
         });

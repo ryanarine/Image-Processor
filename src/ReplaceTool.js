@@ -17,34 +17,23 @@ class ReplaceTool extends Component {
     this.copy = this.copy.bind(this);
   }
 
+  getStateValues = () => {
+    const state = this.props;
+    const { cc: comparisons, fc: oldVal, fp: percentages, oc: operators, rc, tc: tolerance } = state;
+    const newVal = rc.map((value, index) =>
+      operators[index] === "*" || operators[index] === "/" ? value / 100 + 1 : value
+    );
+    return { comparisons, oldVal, percentages, operators, newVal, tolerance };
+  };
+
   replace() {
-    let state = this.props;
-    let comparisons = state.cc;
-    let oldVal = state.fc;
-    let operators = state.oc;
-    let newVal = [state.rc[0], state.rc[1], state.rc[2], state.rc[3]];
-    for (let i = 0; i < operators.length; i++) {
-      if (operators[i] === "*" || operators[i] === "/") {
-        newVal[i] = newVal[i] / 100 + 1;
-      }
-    }
-    let tolerance = state.tc;
-    this.props.basicImgEffect("REPLACE", [comparisons, oldVal, operators, newVal, tolerance]);
+    const { comparisons, oldVal, percentages, operators, newVal, tolerance } = this.getStateValues();
+    this.props.basicImgEffect("REPLACE", [comparisons, oldVal, percentages, operators, newVal, tolerance]);
   }
 
   section() {
-    let state = this.props;
-    let comparisons = state.cc;
-    let oldVal = state.fc;
-    let operators = state.oc;
-    let newVal = [state.rc[0], state.rc[1], state.rc[2], state.rc[3]];
-    for (let i = 0; i < operators.length; i++) {
-      if (operators[i] === "*" || operators[i] === "/") {
-        newVal[i] = newVal[i] / 100 + 1;
-      }
-    }
-    let tolerance = state.tc;
-    this.props.section(comparisons, oldVal, operators, newVal, tolerance);
+    const { comparisons, oldVal, percentages, operators, newVal, tolerance } = this.getStateValues();
+    this.props.section(comparisons, oldVal, percentages, operators, newVal, tolerance);
   }
 
   // Helps the user navigate the input boxes using arrow keys
@@ -92,7 +81,7 @@ class ReplaceTool extends Component {
   }
 
   copy() {
-    let pixel = store.getState().image.pixel;
+    const pixel = store.getState().image.pixel;
     if (pixel) {
       this.props.sampleColour(pixel[0], pixel[1], pixel[2], pixel[3]);
     } else {
@@ -101,9 +90,9 @@ class ReplaceTool extends Component {
   }
 
   render() {
-    let frt = colours.map((colour, index) => (
+    const frt = colours.map((colour, index) => (
       <React.Fragment>
-        <Find key={"fc" + colour} index={index} />
+        <Find key={"fc" + colour} index={index} isAlpha={index === colours.length - 1} />
         <Replace key={"rc" + colour} index={index} />
         <Tolerance key={"tc" + colour} index={index} />
       </React.Fragment>

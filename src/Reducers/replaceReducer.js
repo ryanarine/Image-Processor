@@ -1,6 +1,9 @@
+import { convertToPercentage } from "utils";
+
 const initialState = {
   cc: ["=", "=", "=", "="],
   fc: [255, 255, 255, 255],
+  fp: [false, false, false, false],
   oc: ["=", "=", "=", "="],
   rc: [255, 255, 255, 255],
   tc: [10, 10, 10, 10],
@@ -40,6 +43,15 @@ function replaceReducer(state = initialState, action) {
       return state;
     }
 
+    case "UPDATEPERCENTAGE": {
+      const index = action.index;
+      state.fp[index] = !state.fp[index];
+      if (state.fp[index] && state.fc[index] > 100) {
+        state.fc[index] = 100;
+      }
+      return state;
+    }
+
     case "MODAL": {
       for (let i = 0; i < state.rModal.length; i++) {
         state.rModal[i] = false;
@@ -51,10 +63,10 @@ function replaceReducer(state = initialState, action) {
       return state;
     }
     case "SAMPLECOLOUR":
-      state.fc[0] = action.r;
-      state.fc[1] = action.g;
-      state.fc[2] = action.b;
-      state.fc[3] = action.a;
+      const { r, g, b, a } = action;
+      const total = r + g + b;
+
+      state.fc = [r, g, b, a].map((value, index) => (state.fp[index] ? convertToPercentage(value, total) : value));
       return state;
     default:
       return state;

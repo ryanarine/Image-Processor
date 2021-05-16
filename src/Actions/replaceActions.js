@@ -7,6 +7,8 @@ export const updateInput = (event, index) => ({
 
 export const updateOption = (index, value, isOperator) => ({ type: "UPDATEOPTION", index, value, isOperator });
 
+export const updatePercentage = index => ({ type: "UPDATEPERCENTAGE", index });
+
 export const replaceModal = index => ({ type: "MODAL", index, replace: true });
 
 export const findModal = index => ({ type: "MODAL", index, replace: false });
