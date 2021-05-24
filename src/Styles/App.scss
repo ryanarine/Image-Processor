@@ -12,10 +12,7 @@ $small: 15px;
 $small-padding: 3px;
 
 body {
-  background-image: linear-gradient(dodgerblue, blue, darkblue, blue, dodgerblue);
-  background-size: 100% 400%;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: white;
+  font-family: "Quicksand", sans-serif;
   overflow: auto;
 }
 
@@ -35,22 +32,6 @@ body {
 }
 
 /* Buttons */
-
-button:hover {
-  box-shadow: 0 0 2px black;
-}
-
-button {
-  cursor: pointer;
-  color: white;
-  text-shadow: inherit;
-  background-image: $buttonGradient;
-  border: 2px solid black;
-  border-radius: 5px;
-  font-size: $medium;
-  margin: 0 5px;
-}
-
 button.fileBtn {
   background-image: $fileGradient;
   font-size: $large;
@@ -96,21 +77,6 @@ input {
   label {
     font-size: $large;
   }
-}
-
-/* Canvases */
-
-.transparent {
-  background-image: url("../Images/transparent.jpg");
-  border: 1px solid black;
-  box-shadow: 5px 5px 20px black;
-}
-
-.transparent,
-#canvas,
-#newCanvas {
-  width: 400px;
-  height: 300px;
 }
 
 /* Icons */

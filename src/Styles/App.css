@@ -4,11 +4,7 @@ html {
 }
 
 body {
-  background-image: -webkit-gradient(linear, left top, left bottom, from(dodgerblue), color-stop(blue), color-stop(darkblue), color-stop(blue), to(dodgerblue));
-  background-image: linear-gradient(dodgerblue, blue, darkblue, blue, dodgerblue);
-  background-size: 100% 400%;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: white;
+  font-family: "Quicksand", sans-serif;
   overflow: auto;
 }
 
@@ -29,23 +25,6 @@ body {
 }
 
 /* Buttons */
-button:hover {
-  -webkit-box-shadow: 0 0 2px black;
-          box-shadow: 0 0 2px black;
-}
-
-button {
-  cursor: pointer;
-  color: white;
-  text-shadow: inherit;
-  background-image: -webkit-gradient(linear, left top, right top, from(limegreen), to(#0b0));
-  background-image: linear-gradient(to right, limegreen, #0b0);
-  border: 2px solid black;
-  border-radius: 5px;
-  font-size: 18px;
-  margin: 0 5px;
-}
-
 button.fileBtn {
   background-image: -webkit-gradient(linear, left top, right top, from(#f00), to(#b00));
   background-image: linear-gradient(to right, #f00, #b00);
@@ -97,21 +76,6 @@ input {
 
 .grid label {
   font-size: 20px;
-}
-
-/* Canvases */
-.transparent {
-  background-image: url("../Images/transparent.jpg");
-  border: 1px solid black;
-  -webkit-box-shadow: 5px 5px 20px black;
-          box-shadow: 5px 5px 20px black;
-}
-
-.transparent,
-#canvas,
-#newCanvas {
-  width: 400px;
-  height: 300px;
 }
 
 /* Icons */

@@ -9,10 +9,11 @@ import {
   basicImgEffect,
   swap,
   switchSample
-} from "./Actions/toolActions";
-import { sampleColour } from "./Actions/replaceActions";
+} from "Actions/toolActions";
+import { sampleColour } from "Actions/replaceActions";
 import Tools, { SimpleTools } from "Components/Tools";
 import "./Styles/App.css";
+import Canvas from "Components/Canvas";
 import { Download, Upload } from "Components/PreviewButtons";
 
 class App extends Component {
@@ -84,42 +85,6 @@ class App extends Component {
     }
   };
 
-  // Center the image on canvas to the clicked point
-  recenter = event => {
-    let canvas = event.target;
-    if (this.props.imgData && (this.props.imgData.width > canvas.width || this.props.imgData.height > canvas.height)) {
-      this.props.center(canvas, event.pageX, event.pageY);
-    }
-  };
-
-  handleClick = event => {
-    if (this.props.imgData && (this.props.pixelSample || this.props.colourSample)) {
-      let canvas = event.target;
-      let [ratioX, ratioY] = [canvas.width / canvas.scrollWidth, canvas.height / canvas.scrollHeight];
-      let point = [
-        Math.round((event.pageX - canvas.offsetLeft) * ratioX + this.props.x1),
-        Math.round((event.pageY - canvas.offsetTop) * ratioY + this.props.y1)
-      ];
-      if (point[0] >= 0 && point[0] <= this.props.imgData.width && point[1] >= 0 && point[1] <= this.props.imgData.height) {
-        let r = this.props.imgData.data[point[1] * this.props.imgData.width * 4 + point[0] * 4];
-        let g = this.props.imgData.data[point[1] * this.props.imgData.width * 4 + point[0] * 4 + 1];
-        let b = this.props.imgData.data[point[1] * this.props.imgData.width * 4 + point[0] * 4 + 2];
-        let a = this.props.imgData.data[point[1] * this.props.imgData.width * 4 + point[0] * 4 + 3];
-        if (this.props.pixelSample) {
-          let pixel = [r, g, b, a, point[0], point[1]];
-          this.props.updatePixel(pixel);
-        } else {
-          this.props.sampleColour(r, g, b, a);
-        }
-      }
-    } else if (this.props.pixelSample) {
-      this.props.switchSample("PIXEL");
-      alert("You must upload an image first. Click the upload button to upload an image.");
-    } else {
-      this.recenter(event);
-    }
-  };
-
   render() {
     return (
       <div className="container" id={"container"}>
@@ -127,12 +92,8 @@ class App extends Component {
           <label>Old Preview</label>
           <label>New Preview</label>
 
-          <div className="transparent">
-            <canvas id="canvas" onClick={this.handleClick}></canvas>
-          </div>
-          <div className="transparent">
-            <canvas id="newCanvas" onClick={this.handleClick}></canvas>
-          </div>
+          <Canvas canvasId="canvas" />
+          <Canvas canvasId="newCanvas" />
 
           <Upload change={this.imageChange} />
           <Download download={this.download} />
