@@ -5,7 +5,7 @@ import { switchSample, basicImgEffect, section } from "./Actions/toolActions";
 import { updateOption, updateInput, sampleColour } from "./Actions/replaceActions";
 import Find from "./Find";
 import Replace from "./Replace";
-import { colours, columnInitials } from "./Constants";
+import { colours, columnInitials } from "./constants";
 import Tolerance from "./Tolerance";
 
 class ReplaceTool extends Component {

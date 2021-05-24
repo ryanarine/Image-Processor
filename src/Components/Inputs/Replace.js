@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { replaceModal, updateInput } from "./Actions/replaceActions";
 import Options from "./Options";
-import { colours, fullColours, operators } from "./Constants";
+import { colours, fullColours, operators } from "./constants";
 
 const mapOperatorToTitle = (operator, value, index) => {
   let colour = fullColours[index];
