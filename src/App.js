@@ -11,23 +11,13 @@ import {
   switchSample
 } from "./Actions/toolActions";
 import { sampleColour } from "./Actions/replaceActions";
-import Tools from "./Tools";
-import SimpleTools from "./SimpleTools";
+import Tools, { SimpleTools } from "Components/Tools";
 import "./Styles/App.css";
-import Upload from "./Upload";
-import Download from "./Download";
+import { Download, Upload } from "Components/PreviewButtons";
 
 class App extends Component {
-  constructor() {
-    super();
-    this.imageChange = this.imageChange.bind(this);
-    this.download = this.download.bind(this);
-    this.recenter = this.recenter.bind(this);
-    this.handleClick = this.handleClick.bind(this);
-  }
-
   // Fires when a new image is uploaded
-  imageChange(event) {
+  imageChange = event => {
     const file = event.target.files[0];
     if (file) {
       let img = new Image();
@@ -75,10 +65,10 @@ class App extends Component {
     // Prevent file name from appearing
     //let name = event.target.value.substr(event.target.value.lastIndexOf("\\") + 1);
     event.target.value = "";
-  }
+  };
 
   // Download new image
-  download(type) {
+  download = type => {
     if (this.props.imgData) {
       const link = document.createElement("a");
       const canvas = document.createElement("canvas");
@@ -92,17 +82,17 @@ class App extends Component {
       link.remove();
       canvas.remove();
     }
-  }
+  };
 
   // Center the image on canvas to the clicked point
-  recenter(event) {
+  recenter = event => {
     let canvas = event.target;
     if (this.props.imgData && (this.props.imgData.width > canvas.width || this.props.imgData.height > canvas.height)) {
       this.props.center(canvas, event.pageX, event.pageY);
     }
-  }
+  };
 
-  handleClick(event) {
+  handleClick = event => {
     if (this.props.imgData && (this.props.pixelSample || this.props.colourSample)) {
       let canvas = event.target;
       let [ratioX, ratioY] = [canvas.width / canvas.scrollWidth, canvas.height / canvas.scrollHeight];
@@ -128,7 +118,7 @@ class App extends Component {
     } else {
       this.recenter(event);
     }
-  }
+  };
 
   render() {
     return (

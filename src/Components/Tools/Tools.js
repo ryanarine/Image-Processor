@@ -1,6 +1,6 @@
 import React from "react";
 import ReplaceTool from "./ReplaceTool";
-import "./Styles/Tools.css";
+import "Styles/Tools.css";
 
 function Tools() {
   return (

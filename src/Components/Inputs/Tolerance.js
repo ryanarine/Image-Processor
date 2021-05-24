@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateInput } from "./Actions/replaceActions";
-import { colours } from "./constants";
+import { colours } from "constants.js";
+import { updateInput } from "Actions/replaceActions";
 
 function Tolerance(props) {
   const index = props.index;

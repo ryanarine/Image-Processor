@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { basicImgEffect } from "./Actions/toolActions";
+import { basicImgEffect } from "Actions/toolActions";
 import Lighten from "./Lighten";
 
 function SimpleTools() {

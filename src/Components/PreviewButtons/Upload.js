@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { swap, zoom } from "./Actions/toolActions";
+import { swap, zoom } from "Actions/toolActions";
 
 function Upload(props) {
   const dispatch = useDispatch();

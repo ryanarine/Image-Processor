@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
-import { basicImgEffect } from "./Actions/toolActions";
+import { basicImgEffect } from "Actions/toolActions";
 
 class Lighten extends PureComponent {
   constructor() {

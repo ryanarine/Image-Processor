@@ -1,12 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { store } from "./index";
-import { switchSample, basicImgEffect, section } from "./Actions/toolActions";
-import { updateOption, updateInput, sampleColour } from "./Actions/replaceActions";
-import Find from "./Find";
-import Replace from "./Replace";
-import { colours, columnInitials } from "./constants";
-import Tolerance from "./Tolerance";
+import { colours, columnInitials } from "constants.js";
+import { store } from "index";
+import { switchSample, basicImgEffect, section } from "Actions/toolActions";
+import { updateOption, updateInput, sampleColour } from "Actions/replaceActions";
+import { Find, Replace, Tolerance } from "Components/Inputs";
 
 class ReplaceTool extends Component {
   constructor() {

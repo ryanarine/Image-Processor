@@ -1,8 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateInput, updatePercentage, findModal } from "./Actions/replaceActions";
-import Options from "./Options";
-import { colours, fullColours, comparisons } from "./constants";
+import { colours, fullColours, comparisons } from "constants.js";
+import { updateInput, updatePercentage, findModal } from "Actions/replaceActions";
+import Options from "Components/Options";
 
 const mapCompareToTitle = (compare, value, isPercentage, index) => {
   const colour = fullColours[index];

@@ -1,4 +1,4 @@
-import { grayscale, negative, lighten, changeImgData, getSection, operate } from "../ToolFunctions";
+import { grayscale, negative, lighten, changeImgData, getSection, operate } from "Components/Tools/utils";
 
 export const initialState = {
   imgData: null,
