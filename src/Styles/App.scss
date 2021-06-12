@@ -32,17 +32,6 @@ body {
 }
 
 /* Buttons */
-button.fileBtn {
-  background-image: $fileGradient;
-  font-size: $large;
-  padding: $small-padding;
-}
-
-button.infoTool {
-  background-image: $infoButtonGradient;
-  font-size: $small;
-  padding: $small-padding;
-}
 
 button.findBtn {
   background-image: none;
@@ -77,54 +66,4 @@ input {
   label {
     font-size: $large;
   }
-}
-
-/* Icons */
-
-#uploadIcon {
-  background-image: url("../Images/upload.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#downloadIcon {
-  background-image: url("../Images/download.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#leftIcon {
-  background-image: url("../Images/LArrow.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#rightIcon {
-  background-image: url("../Images/RArrow.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#plusIcon {
-  background-image: url("../Images/plus.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#minusIcon {
-  background-image: url("../Images/minus.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#dropperIcon {
-  background-image: url("../Images/dropper.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#mouseDropperIcon {
-  background-image: url("../Images/mousePlusDropper.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
 }

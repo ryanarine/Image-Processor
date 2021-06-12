@@ -19,14 +19,12 @@ const useStyles = makeStyles(theme => ({
 function Canvas({ canvasId }) {
   const { root, box } = useStyles();
 
-  console.log("CANVAS");
-
   const dispatch = useDispatch();
-  const imgData = useSelector(state => state.imgData);
-  const pixelSample = useSelector(state => state.pixelSample);
-  const colourSample = useSelector(state => state.colourSample);
-  const x1 = useSelector(state => state.x1);
-  const y1 = useSelector(state => state.y1);
+  const imgData = useSelector(state => state.image.imgData);
+  const pixelSample = useSelector(state => state.image.pixelSample);
+  const colourSample = useSelector(state => state.image.colourSample);
+  const x1 = useSelector(state => state.image.x1);
+  const y1 = useSelector(state => state.image.y1);
 
   // Center the image on canvas to the clicked point
   const recenter = event => {

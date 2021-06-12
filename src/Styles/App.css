@@ -25,20 +25,6 @@ body {
 }
 
 /* Buttons */
-button.fileBtn {
-  background-image: -webkit-gradient(linear, left top, right top, from(#f00), to(#b00));
-  background-image: linear-gradient(to right, #f00, #b00);
-  font-size: 20px;
-  padding: 3px;
-}
-
-button.infoTool {
-  background-image: -webkit-gradient(linear, left top, right top, from(#0af), to(#07f));
-  background-image: linear-gradient(to right, #0af, #07f);
-  font-size: 15px;
-  padding: 3px;
-}
-
 button.findBtn {
   background-image: none;
   background-color: #222;
@@ -76,54 +62,5 @@ input {
 
 .grid label {
   font-size: 20px;
-}
-
-/* Icons */
-#uploadIcon {
-  background-image: url("../Images/upload.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#downloadIcon {
-  background-image: url("../Images/download.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#leftIcon {
-  background-image: url("../Images/LArrow.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#rightIcon {
-  background-image: url("../Images/RArrow.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#plusIcon {
-  background-image: url("../Images/plus.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#minusIcon {
-  background-image: url("../Images/minus.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#dropperIcon {
-  background-image: url("../Images/dropper.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-#mouseDropperIcon {
-  background-image: url("../Images/mousePlusDropper.PNG");
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 /*# sourceMappingURL=App.css.map */
