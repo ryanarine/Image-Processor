@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSnackbar } from "notistack";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
@@ -20,6 +21,8 @@ const useStyles = makeStyles(theme => ({
 
 function ReplaceTool() {
   const { replace_button_container } = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
+
   const dispatch = useDispatch();
   const comparisons = useSelector(state => state.replace.cc);
   const oldVal = useSelector(state => state.replace.fc);
@@ -35,7 +38,16 @@ function ReplaceTool() {
     if (pixel) {
       dispatch(sampleColour(...pixel));
     } else {
-      alert("You must specify a pixel first. Click on the cursor icon and then click on a pixel on the canvas to do so");
+      enqueueSnackbar(
+        "You must specify a pixel first. Click on the cursor icon and then click on a pixel on the canvas to do so.",
+        {
+          variant: "error",
+          anchorOrigin: {
+            vertical: "top",
+            horizontal: "center"
+          }
+        }
+      );
     }
   };
 
