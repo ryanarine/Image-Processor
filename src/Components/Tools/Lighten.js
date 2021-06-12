@@ -1,37 +1,56 @@
-import React, { PureComponent } from "react";
-import { connect } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { basicImgEffect } from "Actions/toolActions";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
-class Lighten extends PureComponent {
-  constructor() {
-    super();
-    this.state = { val: 0 };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+const MAX_VALUE = 500;
+
+const useStyles = makeStyles(() => ({
+  input: {
+    width: "10ch"
   }
+}));
 
-  handleChange(event) {
-    let val = event.target.value;
-    if (!isNaN(val) && val >= 0 && val <= 500) {
+function Lighten(props) {
+  const { text, multiplier } = props;
+  const { input } = useStyles();
+
+  const dispatch = useDispatch();
+  const [value, setValue] = useState(0);
+
+  const handleChange = e => {
+    let val = e.target.value;
+    if (!isNaN(val) && val >= 0 && val <= MAX_VALUE) {
       val = Number(Number(val).toFixed());
-      this.setState({ val });
+      setValue(val);
     }
-  }
+  };
 
-  handleClick() {
-    this.props.basicImgEffect("BRIGHT", [this.props.multiplier(this.state.val)]);
-  }
+  const handleClick = () => {
+    dispatch(basicImgEffect("BRIGHT", [multiplier(value)]));
+  };
+  return (
+    <>
+      <Button onClick={handleClick} color="secondary" variant="contained">
+        {text || "Lighten"}
+      </Button>
 
-  render() {
-    let text = this.props.text || "Lighten";
-    return (
-      <React.Fragment>
-        <button onClick={this.handleClick}> {text}</button>
-        <input type="text" value={this.state.val} onChange={this.handleChange} style={{ width: "25px" }} />
-        <label>%</label>
-      </React.Fragment>
-    );
-  }
+      <TextField
+        type="number"
+        variant="outlined"
+        value={value}
+        onChange={handleChange}
+        className={input}
+        InputProps={{
+          endAdornment: <InputAdornment position="end">%</InputAdornment>
+        }}
+        inputProps={{ max: MAX_VALUE, min: 0 }}
+      />
+    </>
+  );
 }
 
-export default connect(() => ({}), { basicImgEffect })(Lighten);
+export default Lighten;
