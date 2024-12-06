@@ -1,6 +1,7 @@
 body,
 html {
   min-height: 100%;
+  background-color: #f7f7f7;
 }
 
 body {
@@ -9,7 +10,6 @@ body {
 }
 
 .container {
-  width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   margin: auto;
@@ -33,8 +33,7 @@ button.findBtn {
   font-size: inherit;
   margin: 0 1px;
   position: relative;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
+  box-sizing: border-box;
   outline: none;
   min-width: 25px;
 }
@@ -46,12 +45,10 @@ input {
 }
 
 .grid {
-  display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (1fr)[2];
-      grid-template-columns: repeat(2, 1fr);
-  -webkit-column-gap: 100px;
-          column-gap: 100px;
+  grid-template-columns: repeat(2, 1fr);
+  -moz-column-gap: 100px;
+       column-gap: 100px;
   row-gap: 10px;
   justify-items: center;
   border-radius: 10px;
@@ -59,8 +56,6 @@ input {
   margin: auto;
   padding-bottom: 5px;
 }
-
 .grid label {
   font-size: 20px;
-}
-/*# sourceMappingURL=App.css.map */
+}/*# sourceMappingURL=App.css.map */

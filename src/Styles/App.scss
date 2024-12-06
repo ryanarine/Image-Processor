@@ -1,6 +1,7 @@
 body,
 html {
   min-height: 100%;
+  background-color: #f7f7f7;
 }
 
 $buttonGradient: linear-gradient(to right, limegreen, #0b0);
@@ -28,7 +29,9 @@ body {
 }
 
 .dropper {
-  cursor: url("../Images/dropperCursor.PNG") 0 0, crosshair;
+  cursor:
+    url("../Images/dropperCursor.PNG") 0 0,
+    crosshair;
 }
 
 /* Buttons */

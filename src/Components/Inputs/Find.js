@@ -1,7 +1,11 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { colours, fullColours, comparisons } from "constants.js";
-import { updateInput, updatePercentage, findModal } from "Actions/replaceActions";
+import {
+  updateInput,
+  updatePercentage,
+  findModal,
+} from "Actions/replaceActions";
 import Options from "Components/Options";
 
 const mapCompareToTitle = (compare, value, isPercentage, index) => {
@@ -33,20 +37,24 @@ const mapCompareToTitle = (compare, value, isPercentage, index) => {
 
 export default function Find(props) {
   const { index, isAlpha } = props;
-  const compare = useSelector(state => state.replace.cc[index]);
-  const value = useSelector(state => state.replace.fc[index]);
-  const isPercentage = useSelector(state => state.replace.fp[index]);
-  const modal = useSelector(state => state.replace.fModal[index]);
+  const compare = useSelector((state) => state.replace.cc[index]);
+  const value = useSelector((state) => state.replace.fc[index]);
+  const isPercentage = useSelector((state) => state.replace.fp[index]);
+  const modal = useSelector((state) => state.replace.fModal[index]);
   const dispatch = useDispatch();
 
-  let options = modal ? <Options options={comparisons} index={index} replace={false} /> : "";
+  let options = modal ? (
+    <Options options={comparisons} index={index} replace={false} />
+  ) : (
+    ""
+  );
   return (
     <span>
       <span style={{ position: "relative" }}>
         <button
           type="button"
           title={mapCompareToTitle(compare, value, isPercentage, index)}
-          onClick={e => {
+          onClick={(e) => {
             e.stopPropagation();
             dispatch(findModal(index));
           }}
@@ -56,7 +64,12 @@ export default function Find(props) {
         </button>
         {options}
       </span>
-      <input type="text" value={value} onChange={e => dispatch(updateInput(e, index))} name={"fc" + colours[index]} />
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => dispatch(updateInput(e, index))}
+        name={"fc" + colours[index]}
+      />
       {!isAlpha && (
         <button
           type="button"

@@ -10,13 +10,13 @@ import { sampleColour } from "Actions/replaceActions";
 import { Find, Replace, Tolerance } from "Components/Inputs";
 import { CursorIcon, DropperIcon, CursorDropperIcon } from "Images/SvgIcons";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   replace_button_container: {
     display: "grid",
     gridTemplateColumns: "auto auto",
     gridGap: theme.spacing(2),
-    gridColumn: "1 / -1"
-  }
+    gridColumn: "1 / -1",
+  },
 }));
 
 function ReplaceTool() {
@@ -24,15 +24,19 @@ function ReplaceTool() {
   const { enqueueSnackbar } = useSnackbar();
 
   const dispatch = useDispatch();
-  const comparisons = useSelector(state => state.replace.cc);
-  const oldVal = useSelector(state => state.replace.fc);
-  const percentages = useSelector(state => state.replace.fp);
-  const operators = useSelector(state => state.replace.oc);
-  const rc = useSelector(state => state.replace.rc);
-  const tolerance = useSelector(state => state.replace.tc);
-  const pixel = useSelector(state => state.image.pixel);
+  const comparisons = useSelector((state) => state.replace.cc);
+  const oldVal = useSelector((state) => state.replace.fc);
+  const percentages = useSelector((state) => state.replace.fp);
+  const operators = useSelector((state) => state.replace.oc);
+  const rc = useSelector((state) => state.replace.rc);
+  const tolerance = useSelector((state) => state.replace.tc);
+  const pixel = useSelector((state) => state.image.pixel);
 
-  const newVal = rc.map((value, index) => (operators[index] === "*" || operators[index] === "/" ? value / 100 + 1 : value));
+  const newVal = rc.map((value, index) =>
+    operators[index] === "*" || operators[index] === "/"
+      ? value / 100 + 1
+      : value
+  );
 
   const copy = () => {
     if (pixel) {
@@ -44,8 +48,8 @@ function ReplaceTool() {
           variant: "error",
           anchorOrigin: {
             vertical: "top",
-            horizontal: "center"
-          }
+            horizontal: "center",
+          },
         }
       );
     }
@@ -53,7 +57,11 @@ function ReplaceTool() {
 
   const frt = colours.map((colour, index) => (
     <React.Fragment>
-      <Find key={"fc" + colour} index={index} isAlpha={index === colours.length - 1} />
+      <Find
+        key={"fc" + colour}
+        index={index}
+        isAlpha={index === colours.length - 1}
+      />
       <Replace key={"rc" + colour} index={index} />
       <Tolerance key={"tc" + colour} index={index} />
     </React.Fragment>
@@ -67,7 +75,7 @@ function ReplaceTool() {
         <IconButton
           onClick={() => dispatch(switchSample("PIXEL"))}
           type="button"
-          color="secondary"
+          color="primary"
           title="Specify a section on the canvas by clicking on a pixel within that section"
         >
           {CursorIcon}
@@ -75,12 +83,17 @@ function ReplaceTool() {
         <IconButton
           onClick={() => dispatch(switchSample("COLOUR"))}
           type="button"
-          color="secondary"
+          color="primary"
           title="Sample a pixel's colour off one of the canvases"
         >
           {DropperIcon}
         </IconButton>
-        <IconButton type="button" onClick={copy} color="secondary" title="Copy the selected pixel's colour to the inputs">
+        <IconButton
+          type="button"
+          onClick={copy}
+          color="primary"
+          title="Copy the selected pixel's colour to the inputs"
+        >
           {CursorDropperIcon}
         </IconButton>
       </span>
@@ -97,17 +110,37 @@ function ReplaceTool() {
       <div className={replace_button_container}>
         <Button
           variant="contained"
-          color="secondary"
+          color="primary"
           onClick={() =>
-            dispatch(basicImgEffect("REPLACE", [comparisons, oldVal, percentages, operators, newVal, tolerance]))
+            dispatch(
+              basicImgEffect("REPLACE", [
+                comparisons,
+                oldVal,
+                percentages,
+                operators,
+                newVal,
+                tolerance,
+              ])
+            )
           }
         >
           Replace Colour
         </Button>
         <Button
           variant="contained"
-          color="secondary"
-          onClick={() => dispatch(section(comparisons, oldVal, percentages, operators, newVal, tolerance))}
+          color="primary"
+          onClick={() =>
+            dispatch(
+              section(
+                comparisons,
+                oldVal,
+                percentages,
+                operators,
+                newVal,
+                tolerance
+              )
+            )
+          }
         >
           Replace Section Colour
         </Button>

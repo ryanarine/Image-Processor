@@ -8,9 +8,19 @@
  * @param {Array} newVal  - A pixel to be operated against according to operators
  * @param {Array} tolerance  - An rgba range
  */
-export function changeImgData(data, comparisons, oldVal, percentages, operators, newVal, tolerance) {
+export function changeImgData(
+  data,
+  comparisons,
+  oldVal,
+  percentages,
+  operators,
+  newVal,
+  tolerance,
+) {
   for (let i = 0; i < data.length; i += 4) {
-    if (isMatch(comparisons, data.slice(i, i + 4), oldVal, percentages, tolerance)) {
+    if (
+      isMatch(comparisons, data.slice(i, i + 4), oldVal, percentages, tolerance)
+    ) {
       operate(operators, data, newVal, i);
     }
   }
@@ -24,14 +34,21 @@ export function changeImgData(data, comparisons, oldVal, percentages, operators,
   -tolerance is an rgba range (only used when the comparison operator is equality)
   -Returns an array of pixel indices that corresponds to a section in Image originating at pixel with the given tolerance range
 */
-export function getSection(Image, pixel, comparisons, oldColour, percentages, tolerance) {
+export function getSection(
+  Image,
+  pixel,
+  comparisons,
+  oldColour,
+  percentages,
+  tolerance,
+) {
   let [width, height, data] = [Image.width, Image.height, Image.data];
   // Adjacent offsets of pixels (Up, Right, Down, Left)
   let adjacent = [
     [0, -1],
     [1, 0],
     [0, 1],
-    [-1, 0]
+    [-1, 0],
   ];
   // visited[i] indicates whether pixel i has been added to the frontier before
   let visited = new Array(width * height);
@@ -58,7 +75,7 @@ export function getSection(Image, pixel, comparisons, oldColour, percentages, to
       section.push(y * width * 4 + x * 4);
       // Add adjacent pixels to frontier
       // eslint-disable-next-line
-      adjacent.forEach(adj => {
+      adjacent.forEach((adj) => {
         // If they have not been added before
         if (!visited[(y + adj[1]) * width + x + adj[0]]) {
           visited[(y + adj[1]) * width + x + adj[0]] = true;
@@ -104,12 +121,16 @@ function isMatch(comparisons, pixel, search, percentages, tolerance) {
   let match = true;
   let compare;
   const totalValue = pixel.slice(0, 3).reduce((sum, val) => sum + val);
-  const values = pixel.map((val, index) => (percentages[index] ? (val / totalValue) * 100 : val));
+  const values = pixel.map((val, index) =>
+    percentages[index] ? (val / totalValue) * 100 : val,
+  );
   for (let offset = 0; offset < 4; offset++) {
     compare = comparisons[offset];
     switch (compare) {
       case "=":
-        match = match && Math.abs(values[offset] - search[offset]) <= tolerance[offset];
+        match =
+          match &&
+          Math.abs(values[offset] - search[offset]) <= tolerance[offset];
         break;
       case ">":
         match = match && values[offset] > search[offset];
@@ -125,7 +146,9 @@ function isMatch(comparisons, pixel, search, percentages, tolerance) {
         match = match && values[offset] <= search[offset];
         break;
       default:
-        alert("Something went terribly wrong. Please refresh the page and try again");
+        alert(
+          "Something went terribly wrong. Please refresh the page and try again",
+        );
         return;
     }
   }
@@ -154,7 +177,9 @@ export function operate(operators, data, pixel, index) {
         data[index + offset] /= pixel[offset];
         break;
       default:
-        alert("Something went terribly wrong. Please refresh the page and try again");
+        alert(
+          "Something went terribly wrong. Please refresh the page and try again",
+        );
         return;
     }
   }

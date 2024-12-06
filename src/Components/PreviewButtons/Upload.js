@@ -15,7 +15,11 @@ function Upload(props) {
     <div>
       <input ref={uploadRef} type="file" onChange={props.change} hidden />
 
-      <IconButton onClick={() => uploadRef.current.click()} color="secondary" title="Download Image">
+      <IconButton
+        onClick={() => uploadRef.current.click()}
+        color="primary"
+        title="Download Image"
+      >
         <SvgIcon
           xmlns="http://www.w3.org/2000/svg"
           enableBackground="new 0 0 24 24"
@@ -32,15 +36,27 @@ function Upload(props) {
         </SvgIcon>
       </IconButton>
 
-      <IconButton onClick={() => dispatch(swap(false))} color="secondary" title="Copy new preview to old">
+      <IconButton
+        onClick={() => dispatch(swap(false))}
+        color="primary"
+        title="Copy new preview to old"
+      >
         <KeyboardBackspaceIcon />
       </IconButton>
 
-      <IconButton onClick={() => dispatch(zoom(false, false))} color="secondary" title="Zoom in">
+      <IconButton
+        onClick={() => dispatch(zoom(false, false))}
+        color="primary"
+        title="Zoom in"
+      >
         <AddIcon />
       </IconButton>
 
-      <IconButton onClick={() => dispatch(zoom(true, false))} color="secondary" title="Zoom out">
+      <IconButton
+        onClick={() => dispatch(zoom(true, false))}
+        color="primary"
+        title="Zoom out"
+      >
         <RemoveIcon />
       </IconButton>
     </div>

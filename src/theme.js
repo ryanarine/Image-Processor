@@ -3,35 +3,36 @@ import { createMuiTheme } from "@material-ui/core";
 export const theme = createMuiTheme({
   palette: {
     primary: {
-      main: "#8630ff"
+      main: "#6200ea",
+      light: "#000",
     },
     secondary: {
-      main: "#6200ea"
-    }
+      main: "#ffffff",
+    },
   },
 
   typography: {
-    fontFamily: "Quicksand"
+    fontFamily: "Quicksand",
   },
 
   props: {
     MuiTextField: {
-      size: "small"
-    }
+      size: "small",
+    },
   },
 
   overrides: {
     MuiButton: {
       root: {
-        textTransform: "initial"
-      }
+        textTransform: "initial",
+      },
     },
 
     MuiOutlinedInput: {
       inputMarginDense: {
         paddingTop: "8px",
-        paddingBottom: "8px"
-      }
-    }
-  }
+        paddingBottom: "8px",
+      },
+    },
+  },
 });

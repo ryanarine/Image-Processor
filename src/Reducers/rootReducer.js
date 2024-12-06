@@ -4,5 +4,5 @@ import replaceReducer from "./replaceReducer";
 
 export default combineReducers({
   image: imageReducer,
-  replace: replaceReducer
+  replace: replaceReducer,
 });

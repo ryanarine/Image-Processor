@@ -1,4 +1,11 @@
-import { grayscale, negative, lighten, changeImgData, getSection, operate } from "Components/Tools/utils";
+import {
+  grayscale,
+  negative,
+  lighten,
+  changeImgData,
+  getSection,
+  operate,
+} from "Components/Tools/utils";
 
 export const initialState = {
   imgData: null,
@@ -11,32 +18,61 @@ export const initialState = {
   colourSample: false,
   pixel: null,
   zoom1: 0,
-  zoom2: 0
+  zoom2: 0,
 };
 
-const mapEffectToFunction = { GRAYSCALE: grayscale, NEGATIVE: negative, BRIGHT: lighten, REPLACE: changeImgData };
+const mapEffectToFunction = {
+  GRAYSCALE: grayscale,
+  NEGATIVE: negative,
+  BRIGHT: lighten,
+  REPLACE: changeImgData,
+};
 const smallestSize = 50;
 const zoomRatio = 1.5;
 
 function imageReducer(state = initialState, action) {
   switch (action.type) {
     case "SET":
-      return action.isNewCanvas ? { ...state, newData: action.data } : { ...state, imgData: action.data };
+      return action.isNewCanvas
+        ? { ...state, newData: action.data }
+        : { ...state, imgData: action.data };
     case "NAME":
       return { ...state, fileName: action.name };
     case "REFRESH":
-      return { ...state, x1: 0, x2: 0, y1: 0, y2: 0, sample: false, pixel: null, zoom1: 0, zoom2: 0 };
+      return {
+        ...state,
+        x1: 0,
+        x2: 0,
+        y1: 0,
+        y2: 0,
+        sample: false,
+        pixel: null,
+        zoom1: 0,
+        zoom2: 0,
+      };
     case "CENTER":
       let canvas = action.canvas;
       let [x, y, imgData] =
-        canvas.id === "canvas" ? [state.x1, state.y1, state.imgData] : [state.x2, state.y2, state.newData];
+        canvas.id === "canvas"
+          ? [state.x1, state.y1, state.imgData]
+          : [state.x2, state.y2, state.newData];
       // Get the appropriate center point
-      let point = centerPoint(action.canvas, x, y, imgData.width, imgData.height, action.pageX, action.pageY);
+      let point = centerPoint(
+        action.canvas,
+        x,
+        y,
+        imgData.width,
+        imgData.height,
+        action.pageX,
+        action.pageY,
+      );
       // Recenter image if the center point has changed
       if (point[0] !== x || point[1] !== y) {
         let ctx = canvas.getContext("2d");
         // Update state
-        canvas.id === "newCanvas" ? ([state.x2, state.y2] = point) : ([state.x1, state.y1] = point);
+        canvas.id === "newCanvas"
+          ? ([state.x2, state.y2] = point)
+          : ([state.x1, state.y1] = point);
         // Construct the recentered image data
         let [width1, height1] = [imgData.width, imgData.height];
         let [width2, height2] = [width1 - point[0], height1 - point[1]];
@@ -49,7 +85,9 @@ function imageReducer(state = initialState, action) {
           for (let col = 0; col < width2; col++) {
             for (let val = 0; val < 4; val++) {
               data[row * width2 * 4 + col * 4 + val] =
-                imgData.data[(point[1] + row) * width1 * 4 + (point[0] + col) * 4 + val];
+                imgData.data[
+                  (point[1] + row) * width1 * 4 + (point[0] + col) * 4 + val
+                ];
             }
           }
         }
@@ -64,10 +102,18 @@ function imageReducer(state = initialState, action) {
     case "SAMPLE":
       if (action.sample === "PIXEL") {
         changeCursor(state.pixelSample);
-        return { ...state, pixelSample: !state.pixelSample, colourSample: false };
+        return {
+          ...state,
+          pixelSample: !state.pixelSample,
+          colourSample: false,
+        };
       } else if (action.sample === "COLOUR") {
         changeCursor(state.colourSample, false);
-        return { ...state, pixelSample: false, colourSample: !state.colourSample };
+        return {
+          ...state,
+          pixelSample: false,
+          colourSample: !state.colourSample,
+        };
       }
       return state;
     case "BASIC":
@@ -88,19 +134,33 @@ function imageReducer(state = initialState, action) {
     case "SECTION": {
       if (state.pixel && state.newData) {
         document.body.style.cursor = "progress";
-        const { comparisons, oldVal, percentages, tolerance, newVal, operators } = action;
-        const section = getSection(state.imgData, state.pixel, comparisons, oldVal, percentages, tolerance);
+        const {
+          comparisons,
+          oldVal,
+          percentages,
+          tolerance,
+          newVal,
+          operators,
+        } = action;
+        const section = getSection(
+          state.imgData,
+          state.pixel,
+          comparisons,
+          oldVal,
+          percentages,
+          tolerance,
+        );
         const data = state.newData.data;
         copy(state.imgData.data, state.newData.data);
         // Replace the colour of each pixel in the section
-        section.forEach(pixel => {
+        section.forEach((pixel) => {
           operate(operators, data, newVal, pixel);
         });
         redraw(state.x2, state.y2, state.newData);
         document.body.style.cursor = "default";
       } else if (!state.pixel) {
         alert(
-          "You must first specify a section to paint. Click the cursor icon and then click on an area in the left canvas."
+          "You must first specify a section to paint. Click the cursor icon and then click on an area in the left canvas.",
         );
       }
       return state;
@@ -115,7 +175,9 @@ function imageReducer(state = initialState, action) {
         ctx.putImageData(imgFile, -x, -y, x, y, canvas.width, canvas.height);
         let data = new Uint8ClampedArray(imgFile.data);
         let copy = new ImageData(data, imgFile.width, imgFile.height);
-        return action.copyToNew ? { ...state, newData: copy } : { ...state, imgData: copy };
+        return action.copyToNew
+          ? { ...state, newData: copy }
+          : { ...state, imgData: copy };
       }
       return state;
     }
@@ -127,16 +189,28 @@ function imageReducer(state = initialState, action) {
         const canvas = document.getElementById(canvasName);
         // Do nothing if the action is zooming out and the canvas completely contains the image unless user has zoomed in before
         // Note: zoom < 0 is only there to maintain consistency (otherwise user might be able to zoom in but not zoom back out)
-        if (!action.isZoomOut || zoom < 0 || imgFile.width > canvas.scrollWidth || imgFile.height > canvas.scrollHeight) {
+        if (
+          !action.isZoomOut ||
+          zoom < 0 ||
+          imgFile.width > canvas.scrollWidth ||
+          imgFile.height > canvas.scrollHeight
+        ) {
           let newZoom = action.isZoomOut ? zoom + 1 : zoom - 1;
           let mult = zoomRatio ** newZoom;
           // Canvas dimensions is always square so images look appropriate
           let width = Math.round(canvas.scrollWidth * mult);
           // Set zoom bounds while still maintaining consistency
-          if ((action.isZoomOut && zoom >= 0) || (!action.isZoomOut && zoom <= 0)) {
+          if (
+            (action.isZoomOut && zoom >= 0) ||
+            (!action.isZoomOut && zoom <= 0)
+          ) {
             if (!action.isZoomOut && width < smallestSize) {
               width = smallestSize;
-            } else if (action.isZoomOut && width >= imgFile.width && width >= imgFile.height) {
+            } else if (
+              action.isZoomOut &&
+              width >= imgFile.width &&
+              width >= imgFile.height
+            ) {
               width = Math.max(imgFile.width, imgFile.height);
             }
           }
@@ -177,7 +251,7 @@ function centerPoint(canvas, x, y, width, height, pageX, pageY) {
   // Subtract by half to get the top left coordinate if clicked point was the center
   let point = [
     Math.round(x + (pageX - canvas.offsetLeft) * ratioX - halfX),
-    Math.round(y + (pageY - canvas.offsetTop) * ratioY - halfY)
+    Math.round(y + (pageY - canvas.offsetTop) * ratioY - halfY),
   ];
   // Compensate for boundaries
   return boundary(point, canvas, width, height);
@@ -190,12 +264,16 @@ function boundary(point, canvas, imgWidth, imgHeight) {
   if (imgWidth < canvas.width || point[0] < 0) {
     point[0] = 0;
   } else {
-    point[0] = point[0] > imgWidth - canvas.width ? imgWidth - canvas.width : point[0];
+    point[0] =
+      point[0] > imgWidth - canvas.width ? imgWidth - canvas.width : point[0];
   }
   if (imgHeight < canvas.height || point[1] < 0) {
     point[1] = 0;
   } else {
-    point[1] = point[1] > imgHeight - canvas.height ? imgHeight - canvas.height : point[1];
+    point[1] =
+      point[1] > imgHeight - canvas.height
+        ? imgHeight - canvas.height
+        : point[1];
   }
   return point;
 }
@@ -203,7 +281,9 @@ function boundary(point, canvas, imgWidth, imgHeight) {
 // Redraw the canvas
 function redraw(x, y, data, canvasName = "newCanvas") {
   let canvas = document.getElementById(canvasName);
-  canvas.getContext("2d").putImageData(data, -x, -y, x, y, canvas.width, canvas.height);
+  canvas
+    .getContext("2d")
+    .putImageData(data, -x, -y, x, y, canvas.width, canvas.height);
 }
 
 // Copy the image data from data1 into data2
@@ -214,7 +294,9 @@ function copy(data1, data2) {
 // Change the cursor style
 function changeCursor(sample, isPixelSample = true) {
   let cursor = isPixelSample ? "container cross" : "container dropper";
-  document.getElementById("container").className = sample ? "container" : cursor;
+  document.getElementById("container").className = sample
+    ? "container"
+    : cursor;
 }
 
 export default imageReducer;

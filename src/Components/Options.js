@@ -11,7 +11,7 @@ const arrowStyle = {
   borderTop: "10px solid rgba(255,255,255,0.8)",
   top: "calc(-100% + 13px)",
   left: "calc(50% - 5px)",
-  animation: "appear 0.3s linear"
+  animation: "appear 0.3s linear",
 };
 
 const boxStyle = {
@@ -24,7 +24,7 @@ const boxStyle = {
   left: "100%",
   borderRadius: "5px",
   transform: "translateX(calc(-50% - 14px))",
-  animation: "appear 0.3s linear"
+  animation: "appear 0.3s linear",
 };
 
 function Options(props) {
@@ -32,7 +32,7 @@ function Options(props) {
   const index = props.index;
   const modal = props.replace ? replaceModal : findModal;
 
-  let buttons = props.options.map(option => (
+  let buttons = props.options.map((option) => (
     <button
       key={option}
       type="button"
@@ -49,7 +49,7 @@ function Options(props) {
       window.removeEventListener("click", click, false);
       dispatch(modal(-1));
     },
-    false
+    false,
   );
   return (
     <React.Fragment>

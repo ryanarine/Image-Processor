@@ -10,8 +10,8 @@ const MAX_VALUE = 500;
 
 const useStyles = makeStyles(() => ({
   input: {
-    width: "10ch"
-  }
+    width: "10ch",
+  },
 }));
 
 function Lighten(props) {
@@ -21,7 +21,7 @@ function Lighten(props) {
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     let val = e.target.value;
     if (!isNaN(val) && val >= 0 && val <= MAX_VALUE) {
       val = Number(Number(val).toFixed());
@@ -45,7 +45,7 @@ function Lighten(props) {
         onChange={handleChange}
         className={input}
         InputProps={{
-          endAdornment: <InputAdornment position="end">%</InputAdornment>
+          endAdornment: <InputAdornment position="end">%</InputAdornment>,
         }}
         inputProps={{ max: MAX_VALUE, min: 0 }}
       />

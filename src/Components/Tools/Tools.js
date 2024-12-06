@@ -1,11 +1,31 @@
 import React from "react";
-import ReplaceTool from "./ReplaceTool";
 import "Styles/Tools.css";
+import FrtHeader from "./FrtHeader";
+import FrtValues from "./FrtValues";
+import ReplaceButtons from "./ReplaceButtons";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  frtGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, auto)",
+    gap: "16px",
+  },
+});
 
 function Tools() {
+  const { frtGrid } = useStyles();
+
   return (
     <div>
-      <ReplaceTool />
+      <div className={frtGrid}>
+        <div></div>
+        <FrtHeader />
+        <FrtValues />
+      </div>
+      <br />
+      <ReplaceButtons />
+      <br />
     </div>
   );
 }

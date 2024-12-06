@@ -12,8 +12,8 @@ import RemoveIcon from "@material-ui/icons/Remove";
 
 const useStyles = makeStyles(() => ({
   flipped: {
-    transform: "rotateY(180deg)"
-  }
+    transform: "rotateY(180deg)",
+  },
 }));
 
 function Download(props) {
@@ -24,14 +24,18 @@ function Download(props) {
 
   const handleClose = () => setAnchor(null);
 
-  const handleDownload = type => () => {
+  const handleDownload = (type) => () => {
     handleClose();
     props.download(type);
   };
 
   return (
     <div>
-      <IconButton onClick={e => setAnchor(e.currentTarget)} color="secondary" title="Download Image">
+      <IconButton
+        onClick={(e) => setAnchor(e.currentTarget)}
+        color="primary"
+        title="Download Image"
+      >
         <SvgIcon
           xmlns="http://www.w3.org/2000/svg"
           enableBackground="new 0 0 24 24"
@@ -48,19 +52,37 @@ function Download(props) {
         </SvgIcon>
       </IconButton>
 
-      <IconButton onClick={() => dispatch(swap(true))} color="secondary" title="Copy old preview to new" className={flipped}>
+      <IconButton
+        onClick={() => dispatch(swap(true))}
+        color="primary"
+        title="Copy old preview to new"
+        className={flipped}
+      >
         <KeyboardArrowRightIcon />
       </IconButton>
 
-      <IconButton onClick={() => dispatch(zoom(false, true))} color="secondary" title="Zoom in">
+      <IconButton
+        onClick={() => dispatch(zoom(false, true))}
+        color="primary"
+        title="Zoom in"
+      >
         <AddIcon />
       </IconButton>
 
-      <IconButton onClick={() => dispatch(zoom(true, true))} color="secondary" title="Zoom out">
+      <IconButton
+        onClick={() => dispatch(zoom(true, true))}
+        color="primary"
+        title="Zoom out"
+      >
         <RemoveIcon />
       </IconButton>
 
-      <Menu anchorEl={anchor} keepMounted open={Boolean(anchor)} onClose={handleClose}>
+      <Menu
+        anchorEl={anchor}
+        keepMounted
+        open={Boolean(anchor)}
+        onClose={handleClose}
+      >
         <MenuItem onClick={handleDownload("png")}>PNG</MenuItem>
         <MenuItem onClick={handleDownload("jpeg")}>JPG</MenuItem>
         <MenuItem onClick={handleDownload("webp")}>WebP</MenuItem>

@@ -8,7 +8,7 @@ import {
   updatePixel,
   basicImgEffect,
   swap,
-  switchSample
+  switchSample,
 } from "Actions/toolActions";
 import { sampleColour } from "Actions/replaceActions";
 import Tools, { SimpleTools } from "Components/Tools";
@@ -18,13 +18,13 @@ import { Download, Upload } from "Components/PreviewButtons";
 
 class App extends Component {
   // Fires when a new image is uploaded
-  imageChange = event => {
+  imageChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       let img = new Image();
       const reader = new FileReader();
-      reader.onload = read => {
-        img.onload = imgEvent => {
+      reader.onload = (read) => {
+        img.onload = (imgEvent) => {
           // Get image data
           var canvas = document.createElement("canvas");
           let img = imgEvent.target;
@@ -33,7 +33,9 @@ class App extends Component {
           canvas.width = width;
           canvas.height = height;
           canvas.getContext("2d").drawImage(img, 0, 0, width, height);
-          let imgData = canvas.getContext("2d").getImageData(0, 0, width, height);
+          let imgData = canvas
+            .getContext("2d")
+            .getImageData(0, 0, width, height);
 
           // Draw image onto canvases
           canvas = document.getElementById("canvas");
@@ -44,7 +46,15 @@ class App extends Component {
           canvas.width = canvas.scrollWidth;
           canvas.height = canvas.scrollHeight;
           this.props.setImgData(false, imgData).then(() => {
-            ctx.putImageData(this.props.imgData, 0, 0, 0, 0, canvas.scrollWidth, canvas.scrollHeight);
+            ctx.putImageData(
+              this.props.imgData,
+              0,
+              0,
+              0,
+              0,
+              canvas.scrollWidth,
+              canvas.scrollHeight,
+            );
             // copy image data into other canvas
             this.props.swap(true);
           });
@@ -56,7 +66,9 @@ class App extends Component {
         let filedata = read.target.result;
         if (filedata.startsWith("data:image")) {
           img.src = filedata;
-          this.props.setFileName(file.name.substring(0, file.name.lastIndexOf(".")));
+          this.props.setFileName(
+            file.name.substring(0, file.name.lastIndexOf(".")),
+          );
         } else {
           alert("That file type is not supported");
         }
@@ -69,7 +81,7 @@ class App extends Component {
   };
 
   // Download new image
-  download = type => {
+  download = (type) => {
     if (this.props.imgData) {
       const link = document.createElement("a");
       const canvas = document.createElement("canvas");
@@ -111,7 +123,7 @@ class App extends Component {
   }
 }
 
-export default connect(state => ({ ...state.image }), {
+export default connect((state) => ({ ...state.image }), {
   setImgData,
   setFileName,
   refresh,
@@ -120,5 +132,5 @@ export default connect(state => ({ ...state.image }), {
   basicImgEffect,
   swap,
   switchSample,
-  sampleColour
+  sampleColour,
 })(App);

@@ -1,5 +1,6 @@
 import { convertToPercentage } from "utils";
 
+// @TODO: remvoe modal props
 const initialState = {
   cc: ["=", "=", "=", "="],
   fc: [255, 255, 255, 255],
@@ -8,11 +9,17 @@ const initialState = {
   rc: [255, 255, 255, 255],
   tc: [10, 10, 10, 10],
   rModal: [false, false, false, false],
-  fModal: [false, false, false, false]
+  fModal: [false, false, false, false],
 };
 
 function replaceReducer(state = initialState, action) {
   switch (action.type) {
+    case "UPDATERGB": {
+      const { prefix, red, green, blue } = action;
+      state[prefix] = [red, green, blue, state[prefix][3]];
+      return state;
+    }
+
     case "UPDATEINPUT": {
       let [name, value, index] = [action.name, action.value, action.index];
       let max = 255;
@@ -25,14 +32,24 @@ function replaceReducer(state = initialState, action) {
       if (!isNaN(value) && value >= 0 && value <= max) {
         value = Number(Number(value).toFixed());
         state[name.substring(0, 2)][index] = value;
+        state[name.substring(0, 2)] = [...state[name.substring(0, 2)]];
         return state;
       }
       return state;
     }
 
     case "UPDATEOPTION": {
-      let [index, option, isOperator] = [action.index, action.value, action.isOperator];
-      if (isOperator && state.rc[index] > 255 && option !== "*" && option !== "/") {
+      let [index, option, isOperator] = [
+        action.index,
+        action.value,
+        action.isOperator,
+      ];
+      if (
+        isOperator &&
+        state.rc[index] > 255 &&
+        option !== "*" &&
+        option !== "/"
+      ) {
         state.rc[index] = 255;
       }
       if (isOperator) {
@@ -58,7 +75,9 @@ function replaceReducer(state = initialState, action) {
         state.fModal[i] = false;
       }
       if (action.index >= 0) {
-        action.replace ? (state.rModal[action.index] = true) : (state.fModal[action.index] = true);
+        action.replace
+          ? (state.rModal[action.index] = true)
+          : (state.fModal[action.index] = true);
       }
       return state;
     }
@@ -66,7 +85,9 @@ function replaceReducer(state = initialState, action) {
       const { r, g, b, a } = action;
       const total = r + g + b;
 
-      state.fc = [r, g, b, a].map((value, index) => (state.fp[index] ? convertToPercentage(value, total) : value));
+      state.fc = [r, g, b, a].map((value, index) =>
+        state.fp[index] ? convertToPercentage(value, total) : value
+      );
       return state;
     default:
       return state;

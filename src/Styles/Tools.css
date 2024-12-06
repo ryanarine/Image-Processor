@@ -1,37 +1,23 @@
 .replaceGrid {
-  display: -ms-grid;
   display: grid;
   margin: auto;
-  -ms-grid-columns: 1fr 2fr 2fr 2fr;
-      grid-template-columns: 1fr 2fr 2fr 2fr;
+  grid-template-columns: 1fr 2fr 2fr 2fr;
   justify-items: center;
   row-gap: 5px;
   padding-bottom: 5px;
   width: 80%;
 }
-
 .replaceGrid input {
   width: 75px;
 }
 
 #replaceBtns {
-  -ms-grid-column: 2;
-  -ms-grid-column-span: 3;
-  grid-column: 2 / 5;
+  grid-column: 2/5;
 }
 
 #clickIcon {
   background-image: url("../Images/mouse.png");
   background-size: cover;
-}
-
-@-webkit-keyframes appear {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 @keyframes appear {
@@ -41,5 +27,4 @@
   to {
     opacity: 1;
   }
-}
-/*# sourceMappingURL=Tools.css.map */
+}/*# sourceMappingURL=Tools.css.map */

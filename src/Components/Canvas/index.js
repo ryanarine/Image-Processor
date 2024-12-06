@@ -6,43 +6,54 @@ import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
 import Transparent from "Images/transparent.jpg";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundImage: `url(${Transparent})`
+    backgroundImage: `url(${Transparent})`,
   },
   box: {
     width: "400px",
-    height: "300px"
-  }
+    height: "300px",
+  },
 }));
 
 function Canvas({ canvasId }) {
   const { root, box } = useStyles();
 
   const dispatch = useDispatch();
-  const imgData = useSelector(state => state.image.imgData);
-  const pixelSample = useSelector(state => state.image.pixelSample);
-  const colourSample = useSelector(state => state.image.colourSample);
-  const x1 = useSelector(state => state.image.x1);
-  const y1 = useSelector(state => state.image.y1);
+  const imgData = useSelector((state) => state.image.imgData);
+  const pixelSample = useSelector((state) => state.image.pixelSample);
+  const colourSample = useSelector((state) => state.image.colourSample);
+  const x1 = useSelector((state) => state.image.x1);
+  const y1 = useSelector((state) => state.image.y1);
 
   // Center the image on canvas to the clicked point
-  const recenter = event => {
+  const recenter = (event) => {
     const canvas = event.target;
-    if (imgData && (imgData.width > canvas.width || imgData.height > canvas.height)) {
+    if (
+      imgData &&
+      (imgData.width > canvas.width || imgData.height > canvas.height)
+    ) {
       dispatch(center(canvas, event.pageX, event.pageY));
     }
   };
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     if (imgData && (pixelSample || colourSample)) {
       const canvas = event.target;
-      const [ratioX, ratioY] = [canvas.width / canvas.scrollWidth, canvas.height / canvas.scrollHeight];
+      const [ratioX, ratioY] = [
+        canvas.width / canvas.scrollWidth,
+        canvas.height / canvas.scrollHeight,
+      ];
       const point = [
         Math.round((event.pageX - canvas.offsetLeft) * ratioX + x1),
-        Math.round((event.pageY - canvas.offsetTop) * ratioY + y1)
+        Math.round((event.pageY - canvas.offsetTop) * ratioY + y1),
       ];
-      if (point[0] >= 0 && point[0] <= imgData.width && point[1] >= 0 && point[1] <= imgData.height) {
+      if (
+        point[0] >= 0 &&
+        point[0] <= imgData.width &&
+        point[1] >= 0 &&
+        point[1] <= imgData.height
+      ) {
         const r = imgData.data[point[1] * imgData.width * 4 + point[0] * 4];
         const g = imgData.data[point[1] * imgData.width * 4 + point[0] * 4 + 1];
         const b = imgData.data[point[1] * imgData.width * 4 + point[0] * 4 + 2];
@@ -56,7 +67,9 @@ function Canvas({ canvasId }) {
       }
     } else if (pixelSample) {
       dispatch(switchSample("PIXEL"));
-      alert("You must upload an image first. Click the upload button to upload an image.");
+      alert(
+        "You must upload an image first. Click the upload button to upload an image.",
+      );
     } else {
       recenter(event);
     }
