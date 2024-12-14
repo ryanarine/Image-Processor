@@ -25,14 +25,6 @@ export const updatePercentage = (index) => ({
   index,
 });
 
-export const replaceModal = (index) => ({
-  type: "MODAL",
-  index,
-  replace: true,
-});
-
-export const findModal = (index) => ({ type: "MODAL", index, replace: false });
-
 export const sampleColour = (r, g, b, a) => ({
   type: "SAMPLECOLOUR",
   r,

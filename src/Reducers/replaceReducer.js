@@ -1,6 +1,5 @@
 import { convertToPercentage } from "utils";
 
-// @TODO: remvoe modal props
 const initialState = {
   cc: ["=", "=", "=", "="],
   fc: [255, 255, 255, 255],
@@ -8,8 +7,6 @@ const initialState = {
   oc: ["=", "=", "=", "="],
   rc: [255, 255, 255, 255],
   tc: [10, 10, 10, 10],
-  rModal: [false, false, false, false],
-  fModal: [false, false, false, false],
 };
 
 function replaceReducer(state = initialState, action) {
@@ -69,18 +66,6 @@ function replaceReducer(state = initialState, action) {
       return state;
     }
 
-    case "MODAL": {
-      for (let i = 0; i < state.rModal.length; i++) {
-        state.rModal[i] = false;
-        state.fModal[i] = false;
-      }
-      if (action.index >= 0) {
-        action.replace
-          ? (state.rModal[action.index] = true)
-          : (state.fModal[action.index] = true);
-      }
-      return state;
-    }
     case "SAMPLECOLOUR":
       const { r, g, b, a } = action;
       const total = r + g + b;
