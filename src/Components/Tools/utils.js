@@ -42,44 +42,46 @@ export function getSection(
   percentages,
   tolerance,
 ) {
-  let [width, height, data] = [Image.width, Image.height, Image.data];
+  const [width, height, data] = [Image.width, Image.height, Image.data];
   // Adjacent offsets of pixels (Up, Right, Down, Left)
-  let adjacent = [
+  const adjacent = [
     [0, -1],
     [1, 0],
     [0, 1],
     [-1, 0],
   ];
   // visited[i] indicates whether pixel i has been added to the frontier before
-  let visited = new Array(width * height);
+  const visited = new Array(width * height);
   // The array of pixels to return
-  let section = [];
+  const section = [];
   let [x, y] = [pixel[4], pixel[5]];
   // The array of pixels that need to be checked if they belong to the section
-  let frontier = [[x, y]];
+  const frontier = [[x, y]];
   visited[y * width + x] = true;
+
   while (frontier.length !== 0) {
     [x, y] = frontier.pop();
     // Check if pixel has valid coordinates
-    if (x < 0 || x > width || y < 0 || y > height) {
-      continue;
-    }
+    if (x < 0 || x >= width || y < 0 || y >= height) continue;
     // Get the colour of the pixel
-    let colour = [];
-    for (let offset = 0; offset < 4; offset++) {
-      colour.push(data[y * width * 4 + x * 4 + offset]);
-    }
+    const flattenedIndex = y * width * 4 + x * 4;
+    const colour = data.slice(flattenedIndex, flattenedIndex + 4);
     // Check that the pixel colour is a match
     if (isMatch(comparisons, colour, oldColour, percentages, tolerance)) {
       // Add pixel to section
-      section.push(y * width * 4 + x * 4);
+      section.push(flattenedIndex);
       // Add adjacent pixels to frontier
       // eslint-disable-next-line
       adjacent.forEach((adj) => {
         // If they have not been added before
-        if (!visited[(y + adj[1]) * width + x + adj[0]]) {
-          visited[(y + adj[1]) * width + x + adj[0]] = true;
-          frontier.push([x + adj[0], y + adj[1]]);
+        const newX = x + adj[0];
+        const newY = y + adj[1];
+        if (newX < 0 || newX >= width || newY < 0 || newY >= height) return;
+
+        const adjVisitedIndex = newY * width + newX;
+        if (!visited[adjVisitedIndex]) {
+          visited[adjVisitedIndex] = true;
+          frontier.push([newX, newY]);
         }
       });
     }
