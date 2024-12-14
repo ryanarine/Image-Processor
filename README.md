@@ -13,7 +13,7 @@ You can view this application [here](https://ryanarine.github.io/Image-Processor
 
 This application is not finished so there are still some things I have yet to implement (this is a growing list): <br>
 
-- Switch to UI library (Material-UI)
+- Switch to using Material-UI (done)
 - Improved support for replacing colour (Ex: Increase the blue value of pixels by the red value) <br>
 - Undo/Redo support <br>
 - Two buttons that copy one canvas' coordinates and zoom level to the other <br>
