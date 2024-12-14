@@ -15,6 +15,7 @@ const useStyles = makeStyles({
 function Tolerance(props) {
   const index = props.index;
   const dispatch = useDispatch();
+  const comparison = useSelector((state) => state.replace.cc[index]);
   const value = useSelector((state) => state.replace.tc[index]);
   const { root } = useStyles();
 
@@ -23,6 +24,7 @@ function Tolerance(props) {
       type="number"
       variant="outlined"
       className={root}
+      disabled={comparison !== "="}
       value={value}
       onChange={(e) => dispatch(updateInput(e, index))}
       name={"tc" + colours[index]}
