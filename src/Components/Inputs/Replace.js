@@ -1,8 +1,23 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import {
+  Button,
+  ButtonGroup,
+  InputAdornment,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import { updateInput, updateOption } from "Actions/replaceActions";
 import { colours, fullColours, operators } from "constants.js";
-import { replaceModal, updateInput } from "Actions/replaceActions";
-import Options from "Components/Options";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    alignItems: "center",
+    gap: `${theme.spacing(1)}px`,
+  },
+}));
 
 const mapOperatorToTitle = (operator, value, index) => {
   let colour = fullColours[index];
@@ -31,46 +46,46 @@ const mapOperatorToTitle = (operator, value, index) => {
 
 function Replace(props) {
   const index = props.index;
+  const { root } = useStyles();
   const operator = useSelector((state) => state.replace.oc[index]);
   const value = useSelector((state) => state.replace.rc[index]);
-  const modal = useSelector((state) => state.replace.rModal[index]);
   const dispatch = useDispatch();
 
-  let percentage = operator === "*" || operator === "/" ? "%" : "";
-  let options = modal ? (
-    <Options options={operators} index={index} replace={true} />
-  ) : (
-    ""
-  );
-  // The operator button
-  let button = (
-    <span style={{ position: "relative" }}>
-      <button
-        type="button"
-        title={mapOperatorToTitle(operator, value, index)}
-        onClick={(e) => {
-          e.stopPropagation();
-          dispatch(replaceModal(index));
-        }}
-        className="findBtn"
-      >
-        {operator}
-      </button>
-      {options}
-    </span>
-  );
+  let isPercentageOp = operator === "*" || operator === "/" ? "%" : "";
 
   return (
-    <span>
-      {button}
-      <input
-        type="text"
+    <div className={root}>
+      <ButtonGroup variant="contained" size="small">
+        {operators.map((option) => (
+          <Button
+            key={option}
+            onClick={() => dispatch(updateOption(index, option, true))}
+            title={mapOperatorToTitle(option, value, index)}
+            color={operator === option ? "primary" : "default"}
+          >
+            {option}
+          </Button>
+        ))}
+      </ButtonGroup>
+      <TextField
+        type="number"
+        variant="outlined"
+        size="small"
         value={value}
         onChange={(e) => dispatch(updateInput(e, index))}
         name={"rc" + colours[index]}
+        InputProps={{
+          endAdornment: (
+            <InputAdornment position="end">
+              <Typography variant="button">
+                {isPercentageOp ? "%" : "#"}
+              </Typography>
+            </InputAdornment>
+          ),
+        }}
+        inputProps={{ max: isPercentageOp ? 500 : 255, min: 0 }}
       />
-      {percentage}
-    </span>
+    </div>
   );
 }
 

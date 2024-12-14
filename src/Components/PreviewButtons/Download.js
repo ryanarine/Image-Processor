@@ -10,14 +10,18 @@ import KeyboardArrowRightIcon from "@material-ui/icons/KeyboardBackspace";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    gap: `${theme.spacing(2)}px`,
+  },
   flipped: {
     transform: "rotateY(180deg)",
   },
 }));
 
 function Download(props) {
-  const { flipped } = useStyles();
+  const { root, flipped } = useStyles();
 
   const dispatch = useDispatch();
   const [anchor, setAnchor] = useState(null);
@@ -30,11 +34,12 @@ function Download(props) {
   };
 
   return (
-    <div>
+    <div className={root}>
       <IconButton
         onClick={(e) => setAnchor(e.currentTarget)}
         color="primary"
         title="Download Image"
+        size="small"
       >
         <SvgIcon
           xmlns="http://www.w3.org/2000/svg"
@@ -57,6 +62,7 @@ function Download(props) {
         color="primary"
         title="Copy old preview to new"
         className={flipped}
+        size="small"
       >
         <KeyboardArrowRightIcon />
       </IconButton>
@@ -65,6 +71,7 @@ function Download(props) {
         onClick={() => dispatch(zoom(false, true))}
         color="primary"
         title="Zoom in"
+        size="small"
       >
         <AddIcon />
       </IconButton>
@@ -73,6 +80,7 @@ function Download(props) {
         onClick={() => dispatch(zoom(true, true))}
         color="primary"
         title="Zoom out"
+        size="small"
       >
         <RemoveIcon />
       </IconButton>

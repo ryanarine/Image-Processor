@@ -1,12 +1,26 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { colours, fullColours, comparisons } from "constants.js";
+import {
+  Button,
+  ButtonGroup,
+  InputAdornment,
+  TextField,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
 import {
   updateInput,
+  updateOption,
   updatePercentage,
-  findModal,
 } from "Actions/replaceActions";
-import Options from "Components/Options";
+import { colours, comparisons, fullColours } from "../../constants";
+import { useDispatch, useSelector } from "react-redux";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    alignItems: "center",
+    gap: `${theme.spacing(1)}px`,
+  },
+}));
 
 const mapCompareToTitle = (compare, value, isPercentage, index) => {
   const colour = fullColours[index];
@@ -37,49 +51,49 @@ const mapCompareToTitle = (compare, value, isPercentage, index) => {
 
 export default function Find(props) {
   const { index, isAlpha } = props;
+  const { root } = useStyles();
   const compare = useSelector((state) => state.replace.cc[index]);
   const value = useSelector((state) => state.replace.fc[index]);
   const isPercentage = useSelector((state) => state.replace.fp[index]);
-  const modal = useSelector((state) => state.replace.fModal[index]);
   const dispatch = useDispatch();
 
-  let options = modal ? (
-    <Options options={comparisons} index={index} replace={false} />
-  ) : (
-    ""
-  );
   return (
-    <span>
-      <span style={{ position: "relative" }}>
-        <button
-          type="button"
-          title={mapCompareToTitle(compare, value, isPercentage, index)}
-          onClick={(e) => {
-            e.stopPropagation();
-            dispatch(findModal(index));
-          }}
-          className="findBtn"
-        >
-          {compare}
-        </button>
-        {options}
-      </span>
-      <input
-        type="text"
+    <div className={root}>
+      <ButtonGroup variant="contained" size="small">
+        {comparisons.map((comparison) => (
+          <Button
+            key={comparison}
+            onClick={() => dispatch(updateOption(index, comparison, false))}
+            title={mapCompareToTitle(comparison, value, isPercentage, index)}
+            color={compare === comparison ? "primary" : "default"}
+          >
+            {comparison}
+          </Button>
+        ))}
+      </ButtonGroup>
+      <TextField
+        type="number"
+        variant="outlined"
+        fullWidth={isAlpha}
         value={value}
         onChange={(e) => dispatch(updateInput(e, index))}
         name={"fc" + colours[index]}
+        {...(!isAlpha && {
+          InputProps: {
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button
+                  onClick={() => dispatch(updatePercentage(index))}
+                  title="Indicate whether the search looks at the absolute or relative value"
+                >
+                  {isPercentage ? "%" : "#"}
+                </Button>
+              </InputAdornment>
+            ),
+          },
+        })}
+        inputProps={{ max: isPercentage ? 100 : 255, min: 0 }}
       />
-      {!isAlpha && (
-        <button
-          type="button"
-          title="Indicate whether the search looks at the absolute or relative value"
-          className="findBtn"
-          onClick={() => dispatch(updatePercentage(index))}
-        >
-          {isPercentage ? "%" : "#"}
-        </button>
-      )}
-    </span>
+    </div>
   );
 }

@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { switchSample } from "Actions/toolActions";
 import { sampleColour } from "Actions/replaceActions";
 import { CursorIcon, DropperIcon, CursorDropperIcon } from "Images/SvgIcons";
+import ColorInputs from "../Inputs/ColorInputs";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,6 +72,7 @@ function FindActions() {
       >
         {CursorDropperIcon}
       </IconButton>
+      <ColorInputs prefix="fc" />
     </div>
   );
 }

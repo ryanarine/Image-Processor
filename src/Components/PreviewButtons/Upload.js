@@ -1,24 +1,34 @@
 import React, { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { swap, zoom } from "Actions/toolActions";
+import { makeStyles } from "@material-ui/styles";
 import IconButton from "@material-ui/core/IconButton";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import KeyboardBackspaceIcon from "@material-ui/icons/KeyboardBackspace";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    gap: `${theme.spacing(2)}px`,
+  },
+}));
+
 function Upload(props) {
   const dispatch = useDispatch();
   const uploadRef = useRef();
+  const { root } = useStyles();
 
   return (
-    <div>
+    <div className={root}>
       <input ref={uploadRef} type="file" onChange={props.change} hidden />
 
       <IconButton
         onClick={() => uploadRef.current.click()}
         color="primary"
         title="Download Image"
+        size="small"
       >
         <SvgIcon
           xmlns="http://www.w3.org/2000/svg"
@@ -40,6 +50,7 @@ function Upload(props) {
         onClick={() => dispatch(swap(false))}
         color="primary"
         title="Copy new preview to old"
+        size="small"
       >
         <KeyboardBackspaceIcon />
       </IconButton>
@@ -48,6 +59,7 @@ function Upload(props) {
         onClick={() => dispatch(zoom(false, false))}
         color="primary"
         title="Zoom in"
+        size="small"
       >
         <AddIcon />
       </IconButton>
@@ -56,6 +68,7 @@ function Upload(props) {
         onClick={() => dispatch(zoom(true, false))}
         color="primary"
         title="Zoom out"
+        size="small"
       >
         <RemoveIcon />
       </IconButton>

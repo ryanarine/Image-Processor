@@ -1,29 +1,38 @@
 import React from "react";
+import { Box, Typography } from "@material-ui/core";
 import { colours } from "constants.js";
-import { FindV2, ReplaceV2, ToleranceV2 } from "Components/Inputs";
+import { Find, Replace, Tolerance } from "Components/Inputs";
 
 function FrtValues() {
   const frt = colours.map((colour, index) => (
     <React.Fragment key={index}>
-      <FindV2
+      <Find
         key={"fc" + colour}
         index={index}
         isAlpha={index === colours.length - 1}
       />
-      <ReplaceV2 key={"rc" + colour} index={index} />
-      <ToleranceV2 key={"tc" + colour} index={index} />
+      <Replace key={"rc" + colour} index={index} />
+      <Tolerance key={"tc" + colour} index={index} />
     </React.Fragment>
   ));
 
   return (
     <>
-      <label>Red:</label>
+      <Box margin="auto">
+        <Typography variant="body1">Red:</Typography>
+      </Box>
       {frt[0]}
-      <label>Green:</label>
+      <Box margin="auto">
+        <Typography variant="body1">Green:</Typography>
+      </Box>
       {frt[1]}
-      <label>Blue:</label>
+      <Box margin="auto">
+        <Typography variant="body1">Blue:</Typography>
+      </Box>
       {frt[2]}
-      <label>Alpha:</label>
+      <Box margin="auto">
+        <Typography variant="body1">Alpha:</Typography>
+      </Box>
       {frt[3]}
     </>
   );
